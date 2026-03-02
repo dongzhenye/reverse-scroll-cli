@@ -15,36 +15,62 @@
 
 **Goal:** Make it production-ready and publicly discoverable.
 
-### Open Source Checklist
-- [ ] **README polish:**
-  - [ ] Add badges (License, GitHub stars, macOS version)
-  - [ ] Add "Why CLI?" section (positioning vs GUI tools)
-  - [ ] Add comparison table (vs Scroll Reverser, Mos, LinearMouse)
-  - [ ] Add troubleshooting section (permission issues, conflicts)
-  - [ ] Add contributing guidelines
+### Phase 1: Distribution (Priority 1)
+- [ ] **Homebrew tap setup:**
+  - [ ] Create `dongzhenye/homebrew-tap` repo
+  - [ ] Add `Casks/reverse-scroll-cli.rb` with correct structure
+  - [ ] Test: `brew tap dongzhenye/tap && brew install --cask reverse-scroll-cli`
+- [ ] **GitHub release v0.1.0:**
+  - [ ] Run `make zip` to generate artifact
+  - [ ] Create release: `gh release create v0.1.0 build/ReverseScrollCLI.app.zip`
+  - [ ] Get sha256: `shasum -a 256 build/ReverseScrollCLI.app.zip`
+  - [ ] Update cask with real sha256
+- [ ] **Local cask install test:**
+  - [ ] Verify postflight installs LaunchAgent
+  - [ ] Verify daemon starts automatically
+  - [ ] Test permission flow
+  - [ ] Test all 4 status output states
+
+### Phase 2: README Polish (Priority 2)
+- [ ] **Add badges:**
+  - [ ] License: MIT
+  - [ ] macOS: 13.0+
+  - [ ] GitHub stars
+- [ ] **Add "Why CLI?" section** — positioning vs GUI tools
+- [ ] **Add comparison table** — vs Scroll Reverser, Mos, LinearMouse
+- [ ] **Add troubleshooting section:**
+  - [ ] Permission not granted → System Settings path
+  - [ ] Conflicting tools detected → how to check/remove
+  - [ ] Natural scrolling OFF warning → why it matters
+- [ ] **Add contributing guidelines** — basic PR workflow
+
+### Phase 3: Open Source Checklist (Priority 3)
 - [ ] **GitHub repo settings:**
   - [ ] Add topics: `macos`, `scroll`, `mouse`, `trackpad`, `cli`, `swift`
   - [ ] Add issue templates (bug report, feature request)
   - [ ] Add PR template
-  - [ ] GitHub Actions: investigate Homebrew best practices (auto-update cask sha256 on release?)
 - [ ] **Security & privacy:**
   - [ ] Add SECURITY.md (vulnerability reporting)
-  - [ ] Review code for any hardcoded paths/credentials (none expected)
-  - [ ] Confirm no telemetry/analytics (privacy-first)
+  - [ ] Review code for any hardcoded paths/credentials
+  - [ ] Confirm no telemetry/analytics
 - [ ] **License verification:**
   - [ ] Confirm MIT license in all source files
-  - [ ] Check dependencies (none currently, but verify if added)
+  - [ ] Check dependencies (none currently)
 
-### Distribution
-- [ ] **Homebrew tap setup** — `dongzhenye/tap` for testing before core submission
-- [ ] **Local cask install test** — verify postflight, LaunchAgent, permission flow
-- [ ] **Manual test pass** — mouse reversal, trackpad passthrough, all 4 status states
-- [ ] **Device compatibility validation** — USB mouse, Bluetooth mouse, Magic Mouse, trackpad
+### Phase 4: Quality & Polish (Priority 4)
+- [ ] **Manual test pass:**
+  - [ ] Mouse reversal works
+  - [ ] Trackpad passthrough works
+  - [ ] All 4 status states display correctly
+- [ ] **Device compatibility validation:**
+  - [ ] USB mouse
+  - [ ] Bluetooth mouse
+  - [ ] Magic Mouse
+  - [ ] Trackpad
 - [ ] **Fix remaining review issues:**
   - [ ] Migrate `launchctl load/unload` → `bootstrap/bootout` (deprecated API)
-  - [ ] Add `--verbose` flag for debug logging
-- [ ] **Release artifact** — `make zip`, upload to GitHub release, update cask sha256
-- [ ] **Public announcement** — set repo to public (if currently private)
+  - [ ] Add `--verbose` flag for debug logging (optional, can defer)
+- [ ] **Set repo to public** — final step before v0.3.0
 
 ## v0.3.0 — Content & Outreach (P1)
 
@@ -97,11 +123,13 @@
 
 ## Priority Rationale
 
-**P0 (v0.2.0):** Open source best practices + reliable distribution. Must be production-ready before public launch.
+**Phase 1 (Distribution):** Can't test or share without Homebrew tap + release artifact.
 
-**P1 (v0.3.0 → v0.4.0):** Content + community validation de-risks Homebrew-core submission. Real users will find edge cases we missed. Blog post establishes technical credibility.
+**Phase 2 (README):** First impression for users. Must be polished before public launch.
 
-**P2 (Future):** Nice-to-haves that expand use cases but aren't blockers for the core value prop.
+**Phase 3 (Open Source):** GitHub best practices. Important but not blocking distribution.
+
+**Phase 4 (Quality):** Final validation before going public.
 
 ---
 
