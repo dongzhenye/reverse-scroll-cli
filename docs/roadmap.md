@@ -11,10 +11,32 @@
 - [x] Help/status output when run with no args
 - [x] README with install instructions
 
-## v0.2.0 — Distribution & Quality (P0)
+## v0.2.0 — Open Source Prep & Distribution (P0)
 
-**Goal:** Make it installable and reliable for early adopters.
+**Goal:** Make it production-ready and publicly discoverable.
 
+### Open Source Checklist
+- [ ] **README polish:**
+  - [ ] Add badges (License, GitHub stars, macOS version)
+  - [ ] Add "Why CLI?" section (positioning vs GUI tools)
+  - [ ] Add comparison table (vs Scroll Reverser, Mos, LinearMouse)
+  - [ ] Add troubleshooting section (permission issues, conflicts)
+  - [ ] Add contributing guidelines
+- [ ] **GitHub repo settings:**
+  - [ ] Add topics: `macos`, `scroll`, `mouse`, `trackpad`, `cli`, `swift`
+  - [ ] Enable Discussions (for Q&A, not just Issues)
+  - [ ] Add issue templates (bug report, feature request)
+  - [ ] Add PR template
+  - [ ] Set up GitHub Actions (optional: build + release automation)
+- [ ] **Security & privacy:**
+  - [ ] Add SECURITY.md (vulnerability reporting)
+  - [ ] Review code for any hardcoded paths/credentials (none expected)
+  - [ ] Confirm no telemetry/analytics (privacy-first)
+- [ ] **License verification:**
+  - [ ] Confirm MIT license in all source files
+  - [ ] Check dependencies (none currently, but verify if added)
+
+### Distribution
 - [ ] **Homebrew tap setup** — `dongzhenye/tap` for testing before core submission
 - [ ] **Local cask install test** — verify postflight, LaunchAgent, permission flow
 - [ ] **Manual test pass** — mouse reversal, trackpad passthrough, all 4 status states
@@ -23,6 +45,7 @@
   - [ ] Migrate `launchctl load/unload` → `bootstrap/bootout` (deprecated API)
   - [ ] Add `--verbose` flag for debug logging
 - [ ] **Release artifact** — `make zip`, upload to GitHub release, update cask sha256
+- [ ] **Public announcement** — set repo to public (if currently private)
 
 ## v0.3.0 — Content & Outreach (P1)
 
@@ -48,6 +71,7 @@
   - 4 high-traffic threads identified (2023-2025)
 - [ ] **Apple Discussions / StackExchange** — answer existing questions with solution
 - [ ] **Hacker News** — "Show HN" post (after blog + Reddit validation)
+- [ ] **Product Hunt** — optional launch (if traction is good)
 
 ### Feedback Loop
 - [ ] **Collect feedback** — GitHub issues, Reddit comments, X replies
@@ -74,11 +98,106 @@
 
 ## Priority Rationale
 
-**P0 (v0.2.0):** Must work reliably for anyone who tries it. Homebrew tap allows safe testing before core submission.
+**P0 (v0.2.0):** Open source best practices + reliable distribution. Must be production-ready before public launch.
 
 **P1 (v0.3.0 → v0.4.0):** Content + community validation de-risks Homebrew-core submission. Real users will find edge cases we missed. Blog post establishes technical credibility.
 
 **P2 (Future):** Nice-to-haves that expand use cases but aren't blockers for the core value prop.
+
+---
+
+## Open Source Checklist Details
+
+### README Enhancements
+
+**Badges to add:**
+```markdown
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![macOS](https://img.shields.io/badge/macOS-13.0+-blue.svg)](https://www.apple.com/macos/)
+[![GitHub stars](https://img.shields.io/github/stars/dongzhenye/reverse-scroll-cli.svg)](https://github.com/dongzhenye/reverse-scroll-cli/stargazers)
+```
+
+**Why CLI? section:**
+> All existing scroll reversal tools (Scroll Reverser, Mos, LinearMouse) are GUI applications with menu bar icons and preferences windows. If you just want mouse scroll reversed without configuration or visual clutter, this is the simplest option.
+
+**Comparison table:**
+| Tool | Type | Config | Size | Our Differentiator |
+|------|------|--------|------|-------------------|
+| reverse-scroll-cli | CLI daemon | Zero | 150KB | Install and forget |
+| Scroll Reverser | Menu bar app | Preferences window | ~5MB | Established, feature-rich |
+| LinearMouse | Preferences app | Full GUI | ~10MB | Per-device customization |
+| Mos | Menu bar app | Per-app settings | ~8MB | Smooth scrolling |
+
+**Troubleshooting section:**
+- Permission not granted → System Settings path
+- Conflicting tools detected → how to check/remove
+- Natural scrolling OFF warning → why it matters
+
+### GitHub Topics
+
+Add these for discoverability:
+- `macos`
+- `scroll`
+- `mouse`
+- `trackpad`
+- `cli`
+- `swift`
+- `homebrew`
+- `accessibility`
+
+### Issue Templates
+
+**Bug Report:**
+```markdown
+**Describe the bug**
+A clear description of what the bug is.
+
+**To Reproduce**
+Steps to reproduce the behavior.
+
+**Expected behavior**
+What you expected to happen.
+
+**Environment:**
+- macOS version: [e.g., 14.2]
+- Mouse model: [e.g., Logitech MX Master 3]
+- Installation method: [brew cask / manual]
+
+**Logs:**
+Run `reverse-scroll-cli --verbose` and paste output.
+```
+
+**Feature Request:**
+```markdown
+**Is your feature request related to a problem?**
+A clear description of the problem.
+
+**Describe the solution you'd like**
+What you want to happen.
+
+**Describe alternatives you've considered**
+Other solutions you've thought about.
+```
+
+### SECURITY.md
+
+```markdown
+# Security Policy
+
+## Supported Versions
+
+| Version | Supported          |
+| ------- | ------------------ |
+| 0.1.x   | :white_check_mark: |
+
+## Reporting a Vulnerability
+
+If you discover a security vulnerability, please email dongzhenye@gmail.com.
+
+Do not open a public issue for security vulnerabilities.
+
+We will respond within 48 hours and work with you to address the issue.
+```
 
 ---
 
