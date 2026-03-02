@@ -15,7 +15,7 @@
 
 **Goal:** Make it production-ready and publicly discoverable.
 
-### Phase 0: Code Signing (Blocker)
+### Phase 0: Code Signing (Blocker) — [#2](https://github.com/dongzhenye/reverse-scroll-cli/issues/2)
 - [ ] **Apple Developer Program** — enroll ($99/year)
 - [ ] **Developer ID signing** — `codesign --sign "Developer ID Application: ..."``
 - [ ] **Notarization** — `notarytool submit` + `stapler staple`
