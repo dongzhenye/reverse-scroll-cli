@@ -111,16 +111,15 @@ func scrollCallback(
     // Mouse wheel = discrete (isContinuous == 0)
     // Trackpad = continuous (isContinuous != 0)
     if event.getIntegerValueField(.scrollWheelEventIsContinuous) == 0 {
-        // Negate all three delta representations so every app sees reversed scroll.
-        // DeltaAxis1 must be set first — macOS recalculates PointDelta/FixedPtDelta
-        // from it internally, so we overwrite those after.
+        // Read all delta values BEFORE writing any.
+        // Setting DeltaAxis1 triggers macOS to internally recalculate
+        // PointDelta and FixedPtDelta, so we must capture originals first.
         let delta = event.getIntegerValueField(.scrollWheelEventDeltaAxis1)
-        event.setIntegerValueField(.scrollWheelEventDeltaAxis1, value: -delta)
-
         let ptDelta = event.getIntegerValueField(.scrollWheelEventPointDeltaAxis1)
-        event.setIntegerValueField(.scrollWheelEventPointDeltaAxis1, value: -ptDelta)
-
         let fixedDelta = event.getDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1)
+
+        event.setIntegerValueField(.scrollWheelEventDeltaAxis1, value: -delta)
+        event.setIntegerValueField(.scrollWheelEventPointDeltaAxis1, value: -ptDelta)
         event.setDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1, value: -fixedDelta)
     }
 
