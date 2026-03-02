@@ -35,7 +35,9 @@ bundle: build
 	@echo "Built $(APP_BUNDLE)"
 
 zip: bundle
-	cd $(BUILD_DIR) && zip -r $(APP_NAME).app.zip $(APP_NAME).app
+	@mkdir -p $(BUILD_DIR)/LaunchAgent
+	cp LaunchAgent/com.dongzhenye.reverse-scroll-cli.plist $(BUILD_DIR)/LaunchAgent/
+	cd $(BUILD_DIR) && zip -r $(APP_NAME).app.zip $(APP_NAME).app LaunchAgent/
 	@echo "Created $(BUILD_DIR)/$(APP_NAME).app.zip"
 
 clean:

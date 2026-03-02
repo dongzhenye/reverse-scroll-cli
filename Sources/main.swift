@@ -51,9 +51,10 @@ func isDaemonRunning() -> Bool {
     task.arguments = ["-f", "reverse-scroll-cli --(daemon|foreground)"]
     let pipe = Pipe()
     task.standardOutput = pipe
+    task.standardError = FileHandle.nullDevice
     try? task.run()
-    task.waitUntilExit()
     let data = pipe.fileHandleForReading.readDataToEndOfFile()
+    task.waitUntilExit()
     let output = String(data: data, encoding: .utf8) ?? ""
     let pids = output.split(separator: "\n").compactMap { Int32($0) }
     return pids.contains { $0 != selfPID }
@@ -110,8 +111,17 @@ func scrollCallback(
     // Mouse wheel = discrete (isContinuous == 0)
     // Trackpad = continuous (isContinuous != 0)
     if event.getIntegerValueField(.scrollWheelEventIsContinuous) == 0 {
+        // Negate all three delta representations so every app sees reversed scroll.
+        // DeltaAxis1 must be set first — macOS recalculates PointDelta/FixedPtDelta
+        // from it internally, so we overwrite those after.
         let delta = event.getIntegerValueField(.scrollWheelEventDeltaAxis1)
         event.setIntegerValueField(.scrollWheelEventDeltaAxis1, value: -delta)
+
+        let ptDelta = event.getIntegerValueField(.scrollWheelEventPointDeltaAxis1)
+        event.setIntegerValueField(.scrollWheelEventPointDeltaAxis1, value: -ptDelta)
+
+        let fixedDelta = event.getDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1)
+        event.setDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1, value: -fixedDelta)
     }
 
     return Unmanaged.passUnretained(event)
