@@ -527,3 +527,9 @@ A zero-config CLI scroll direction tool is **absolutely feasible**. The core mec
 4. Package as minimal `.app` bundle with `LSUIElement=true` for stable Accessibility permission
 5. Distribute as Homebrew cask initially; provide the raw binary for power users who want formula/manual install
 6. LaunchAgent plist for auto-start, installed by `scroll-fix install` subcommand
+
+## 8. Validated Assumptions
+
+- Scroll Reverser installed and tested on author's MacBook — per-device scroll direction works correctly via CGEvent tap
+- Natural Scrolling ON (system default) + Scroll Reverser reversing mouse only = desired behavior confirmed
+- Homebrew cask `scroll-reverser` installs cleanly, Accessibility permission flow is acceptable

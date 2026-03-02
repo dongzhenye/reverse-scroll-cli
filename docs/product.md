@@ -226,38 +226,7 @@ Running ✓  Accessibility ✓
 Quit Scroll Reverser or uninstall this tool.
 ```
 
-## 7. Development Roadmap
-
-### v0.1.0 — MVP
-
-- [ ] Swift CLI daemon with CGEvent tap
-- [ ] `isContinuous` mouse detection
-- [ ] `.app` bundle with `LSUIElement=true`
-- [ ] Homebrew cask formula
-- [ ] LaunchAgent auto-registration via cask postflight
-- [ ] `--version` flag
-- [ ] Help/status output when run with no args
-- [ ] README with install instructions
-
-### v0.2.0 — Polish
-
-- [ ] `--verbose` flag for debug logging
-- [ ] Alternate detection method for Logitech mice
-- [ ] Horizontal scroll reversal option
-- [ ] Homebrew-core submission
-
-### Future (maybe)
-
-- [ ] Notarization for Gatekeeper
-- [ ] Per-app exceptions (e.g., don't reverse in certain apps)
-
-## 8. Validated Assumptions
-
-- Scroll Reverser installed and tested on author's MacBook — per-device scroll direction works correctly via CGEvent tap
-- Natural Scrolling ON (system default) + Scroll Reverser reversing mouse only = desired behavior confirmed
-- Homebrew cask `scroll-reverser` installs cleanly, Accessibility permission flow is acceptable
-
-## 9. References
+## 7. References
 
 - [shadowfacts.net — Auto-switch scroll direction](https://shadowfacts.net/2021/auto-switch-scroll-direction/)
 - [Apple CGEventCreateScrollWheelEvent](https://developer.apple.com/documentation/coregraphics/cgeventcreatescrollwheelevent)
