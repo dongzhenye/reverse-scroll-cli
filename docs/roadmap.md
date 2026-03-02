@@ -24,10 +24,9 @@
   - [ ] Add contributing guidelines
 - [ ] **GitHub repo settings:**
   - [ ] Add topics: `macos`, `scroll`, `mouse`, `trackpad`, `cli`, `swift`
-  - [ ] Enable Discussions (for Q&A, not just Issues)
   - [ ] Add issue templates (bug report, feature request)
   - [ ] Add PR template
-  - [ ] Set up GitHub Actions (optional: build + release automation)
+  - [ ] GitHub Actions: investigate Homebrew best practices (auto-update cask sha256 on release?)
 - [ ] **Security & privacy:**
   - [ ] Add SECURITY.md (vulnerability reporting)
   - [ ] Review code for any hardcoded paths/credentials (none expected)
