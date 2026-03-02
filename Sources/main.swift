@@ -2,7 +2,7 @@ import AppKit
 import CoreGraphics
 import ApplicationServices
 
-let version = "0.1.0"
+let version = "0.1.1"
 
 // MARK: - Global state
 
@@ -137,12 +137,13 @@ func runDaemon(foreground: Bool) {
         exit(1)
     }
 
-    // Check accessibility permission
+    // Check accessibility permission — no prompt, just exit with guidance.
+    // Prompting via AXIsProcessTrustedWithOptions causes repeated dialogs
+    // when launched by LaunchAgent with KeepAlive.
     if !isAccessibilityGranted() {
-        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue(): true] as CFDictionary
-        AXIsProcessTrustedWithOptions(options)
         fputs("Accessibility permission required.\n", stderr)
         fputs("Grant: System Settings > Privacy & Security > Accessibility\n", stderr)
+        fputs("Add: /Applications/ReverseScrollCLI.app\n", stderr)
         exit(1)
     }
 

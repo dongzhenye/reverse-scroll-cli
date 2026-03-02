@@ -1,7 +1,8 @@
 APP_NAME = ReverseScrollCLI
 BINARY_NAME = reverse-scroll-cli
-VERSION = 0.1.0
+VERSION = 0.1.1
 MIN_MACOS = 13.0
+BUNDLE_ID = com.dongzhenye.reverse-scroll-cli
 
 BUILD_DIR = build
 APP_BUNDLE = $(BUILD_DIR)/$(APP_NAME).app
@@ -32,6 +33,7 @@ bundle: build
 	@mkdir -p $(MACOS_DIR) $(RESOURCES_DIR)
 	cp $(BUILD_DIR)/$(BINARY_NAME) $(MACOS_DIR)/
 	cp Resources/Info.plist $(CONTENTS)/
+	codesign --force --deep --sign - --identifier $(BUNDLE_ID) $(APP_BUNDLE)
 	@echo "Built $(APP_BUNDLE)"
 
 zip: bundle
