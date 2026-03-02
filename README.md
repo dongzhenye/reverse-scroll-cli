@@ -59,6 +59,21 @@ leaving trackpad behavior untouched.
 
 ## Troubleshooting
 
+### "Cannot verify developer" warning (macOS Gatekeeper)
+
+On first install, macOS may show a warning that the app is from an unidentified developer. This is normal for unsigned apps.
+
+**To open:**
+1. Click the **"?"** button next to "Move to Trash"
+2. Select **"Open"**
+
+Or:
+1. Open **System Settings > Privacy & Security**
+2. Scroll down to find **ReverseScrollCLI**
+3. Click **"Open Anyway"**
+
+You only need to do this once. Future versions will be notarized to eliminate this warning.
+
 ### Permission not granted
 
 If the tool doesn't work after installation:
