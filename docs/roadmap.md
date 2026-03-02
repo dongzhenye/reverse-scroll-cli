@@ -2,19 +2,20 @@
 
 ## v0.1.0 — MVP
 
-- [ ] Swift CLI daemon with CGEvent tap
-- [ ] `isContinuous` mouse detection
-- [ ] `.app` bundle with `LSUIElement=true`
-- [ ] Homebrew cask formula
-- [ ] LaunchAgent auto-registration via cask postflight
-- [ ] `--version` flag
-- [ ] Help/status output when run with no args
-- [ ] README with install instructions
+- [x] Swift CLI daemon with CGEvent tap
+- [x] `isContinuous` mouse detection
+- [x] `.app` bundle with `LSUIElement=true`
+- [x] Homebrew cask formula
+- [x] LaunchAgent auto-registration via cask postflight
+- [x] `--version` flag
+- [x] Help/status output when run with no args
+- [x] README with install instructions
 
 ## v0.2.0 — Polish
 
 - [ ] `--verbose` flag for debug logging
-- [ ] Add good test coverage
+- [ ] Manual test pass: mouse reversal, trackpad passthrough, status output states
+- [ ] Device compatibility validation (USB mouse, Bluetooth mouse, Magic Mouse, trackpad)
 - [ ] Homebrew-core submission
 
 ## Future (maybe)

@@ -1,0 +1,16 @@
+# Build artifacts
+build/
+*.app/
+reverse-scroll-cli-arm64
+reverse-scroll-cli-x86
+reverse-scroll-cli.zip
+ReverseScrollCLI.app.zip
+
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+DerivedData/
+*.swp
+
+# macOS
+.DS_Store
