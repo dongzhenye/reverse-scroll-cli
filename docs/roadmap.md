@@ -15,6 +15,15 @@
 
 **Goal:** Make it production-ready and publicly discoverable.
 
+### Phase 0: Code Signing (Blocker)
+- [ ] **Apple Developer Program** — enroll ($99/year)
+- [ ] **Developer ID signing** — `codesign --sign "Developer ID Application: ..."``
+- [ ] **Notarization** — `notarytool submit` + `stapler staple`
+- [ ] **Update Makefile** — integrate signing into build pipeline
+- [ ] **Verify install flow** — no Gatekeeper warnings, Accessibility permission persists across upgrades
+
+Without signing: Gatekeeper blocks first launch, Accessibility permission breaks on upgrade, users get repeated permission dialogs. This is the #1 blocker for "install and forget".
+
 ### Phase 1: Distribution (Priority 1)
 - [ ] **Homebrew tap setup:**
   - [ ] Create `dongzhenye/homebrew-tap` repo
@@ -115,9 +124,7 @@
 
 - [ ] **Alternate detection for Logitech mice** — fallback heuristic when `isContinuous` is wrong
 - [ ] **Horizontal scroll reversal** — optional flag for tilt wheels
-- [ ] **Notarization** — Apple Developer ID signing for Gatekeeper
 - [ ] **Per-app exceptions** — config file to disable reversal in specific apps (e.g., games)
-- [ ] **Telemetry opt-in** — anonymous usage stats (device types, macOS versions)
 
 ---
 

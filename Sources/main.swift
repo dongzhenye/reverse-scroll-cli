@@ -144,7 +144,7 @@ func runDaemon(foreground: Bool) {
         fputs("Accessibility permission required.\n", stderr)
         fputs("Grant: System Settings > Privacy & Security > Accessibility\n", stderr)
         fputs("Add: /Applications/ReverseScrollCLI.app\n", stderr)
-        exit(1)
+        exit(0)  // exit(0) so KeepAlive doesn't treat it as a crash and loop
     }
 
     if foreground {
