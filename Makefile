@@ -10,6 +10,10 @@ CONTENTS = $(APP_BUNDLE)/Contents
 MACOS_DIR = $(CONTENTS)/MacOS
 RESOURCES_DIR = $(CONTENTS)/Resources
 
+# Developer ID Application identity (full common name with team ID in parens).
+# Override with: make bundle SIGN_IDENTITY="..."
+SIGN_IDENTITY ?= $(shell security find-identity -v -p codesigning | grep "Developer ID Application" | head -1 | sed -E 's/.*"(.*)".*/\1/')
+
 .PHONY: all clean build bundle zip version test
 
 all: bundle
@@ -31,8 +35,12 @@ bundle: build
 	@mkdir -p $(MACOS_DIR) $(RESOURCES_DIR)
 	cp $(BUILD_DIR)/$(BINARY_NAME) $(MACOS_DIR)/
 	cp $(BUILD_DIR)/Info.plist $(CONTENTS)/
-	codesign --force --deep --sign - --identifier $(BUNDLE_ID) $(APP_BUNDLE)
-	@echo "Built $(APP_BUNDLE)"
+	codesign --force --deep --options runtime --timestamp \
+		--sign "$(SIGN_IDENTITY)" \
+		--identifier $(BUNDLE_ID) \
+		$(APP_BUNDLE)
+	codesign --verify --deep --strict --verbose=2 $(APP_BUNDLE)
+	@echo "Built and signed $(APP_BUNDLE)"
 
 zip: bundle
 	@mkdir -p $(BUILD_DIR)/LaunchAgent
