@@ -14,7 +14,12 @@ RESOURCES_DIR = $(CONTENTS)/Resources
 # Override with: make bundle SIGN_IDENTITY="..."
 SIGN_IDENTITY ?= $(shell security find-identity -v -p codesigning | grep "Developer ID Application" | head -1 | sed -E 's/.*"(.*)".*/\1/')
 
-.PHONY: all clean build bundle zip version test
+# App Store Connect API key identifiers (set in env or override on command line)
+AC_KEY_ID    ?= $(shell echo $$AC_KEY_ID)
+AC_ISSUER_ID ?= $(shell echo $$AC_ISSUER_ID)
+AC_KEY_PATH  ?= $(HOME)/.appstoreconnect/private/AuthKey_$(AC_KEY_ID).p8
+
+.PHONY: all clean build bundle zip notarize version test
 
 all: bundle
 
@@ -47,6 +52,19 @@ zip: bundle
 	cp LaunchAgent/com.dongzhenye.reverse-scroll-cli.plist $(BUILD_DIR)/LaunchAgent/
 	cd $(BUILD_DIR) && zip -r $(APP_NAME).app.zip $(APP_NAME).app LaunchAgent/
 	@echo "Created $(BUILD_DIR)/$(APP_NAME).app.zip"
+
+notarize: zip
+	@test -n "$(AC_KEY_ID)" || (echo "AC_KEY_ID not set"; exit 1)
+	@test -n "$(AC_ISSUER_ID)" || (echo "AC_ISSUER_ID not set"; exit 1)
+	xcrun notarytool submit $(BUILD_DIR)/$(APP_NAME).app.zip \
+		--key $(AC_KEY_PATH) \
+		--key-id $(AC_KEY_ID) \
+		--issuer $(AC_ISSUER_ID) \
+		--wait
+	xcrun stapler staple $(APP_BUNDLE)
+	# Re-zip with stapled ticket
+	cd $(BUILD_DIR) && rm -f $(APP_NAME).app.zip && zip -r $(APP_NAME).app.zip $(APP_NAME).app LaunchAgent/
+	@echo "Notarized and stapled — $(BUILD_DIR)/$(APP_NAME).app.zip ready for release"
 
 clean:
 	rm -rf $(BUILD_DIR) .build
