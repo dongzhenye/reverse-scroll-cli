@@ -25,7 +25,7 @@
 - [ ] Pure-helper unit tests (conflict detection, version)
 - [ ] Sync `product.md` + `architecture.md` to refactored code
 
-### Wave B — Release Hardening (Phase 0 signing blocker [#2](https://github.com/dongzhenye/reverse-scroll-cli/issues/2))
+### Wave B — Release Hardening (signing blocker: [#2](https://github.com/dongzhenye/reverse-scroll-cli/issues/2))
 - [ ] Apple Developer Program enrollment ($99)
 - [ ] Developer ID Application signing in Makefile
 - [ ] Notarization (`notarytool submit` + `stapler staple`)
@@ -82,6 +82,8 @@
 ---
 
 ## Open Source Checklist Details
+
+> All items below shipped in v0.1.x (README badges / sections / troubleshooting, SECURITY.md, issue & PR templates, GitHub topics). Kept as reference templates for future projects.
 
 ### README Enhancements
 
