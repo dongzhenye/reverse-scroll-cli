@@ -10,9 +10,12 @@ CONTENTS = $(APP_BUNDLE)/Contents
 MACOS_DIR = $(CONTENTS)/MacOS
 RESOURCES_DIR = $(CONTENTS)/Resources
 
-.PHONY: all clean build bundle zip version
+.PHONY: all clean build bundle zip version test
 
 all: bundle
+
+test: version
+	swift test
 
 version:
 	@mkdir -p $(BUILD_DIR)
