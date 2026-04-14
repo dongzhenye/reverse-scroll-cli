@@ -199,18 +199,18 @@ We will respond within 48 hours and work with you to address the issue.
 
 **Tweet 1 (Hook):**
 > macOS forces your mouse and trackpad to share the same scroll direction.
-> 
+>
 > Natural scrolling feels right on a trackpad, but wrong with a mouse wheel.
-> 
+>
 > I built a CLI tool to fix this. Zero config, no GUI, just works.
-> 
+>
 > 🧵 [1/4]
 
 **Tweet 2 (Problem):**
 > Existing solutions (Scroll Reverser, Mos, LinearMouse) all add menu bar icons and preferences windows.
-> 
+>
 > I wanted something invisible. Install once, forget forever.
-> 
+>
 > So I built reverse-scroll-cli: a 200-line Swift daemon that runs in the background.
 
 **Tweet 3 (Tech):**
@@ -225,10 +225,10 @@ We will respond within 48 hours and work with you to address the issue.
 > ```
 > brew install --cask reverse-scroll-cli
 > ```
-> 
+>
 > MIT licensed, open source.
 > GitHub: [link]
-> 
+>
 > If you've been frustrated by this macOS limitation, give it a shot. 🚀
 
 **Visuals:**
