@@ -489,7 +489,7 @@ all: bundle
 build:
 	@mkdir -p $(BUILD_DIR)
 	swift build -c release --arch arm64 --arch x86_64
-	cp .build/apple/Products/Release/$(BINARY_NAME) $(BUILD_DIR)/$(BINARY_NAME)
+	cp .build/apple/Products/Release/$(APP_NAME) $(BUILD_DIR)/$(BINARY_NAME)
 
 bundle: build
 	@mkdir -p $(MACOS_DIR) $(RESOURCES_DIR)
@@ -696,7 +696,7 @@ version:
 build: version
 	@mkdir -p $(BUILD_DIR)
 	swift build -c release --arch arm64 --arch x86_64
-	cp .build/apple/Products/Release/$(BINARY_NAME) $(BUILD_DIR)/$(BINARY_NAME)
+	cp .build/apple/Products/Release/$(APP_NAME) $(BUILD_DIR)/$(BINARY_NAME)
 
 bundle: build
 	@mkdir -p $(MACOS_DIR) $(RESOURCES_DIR)
