@@ -9,7 +9,7 @@ let knownConflictingTools: [ConflictingTool] = [
     ConflictingTool(displayName: "Scroll Reverser",
                     bundleIdentifiers: ["com.pilotmoon.scroll-reverser"]),
     ConflictingTool(displayName: "Mos",
-                    bundleIdentifiers: ["cn.caldis.Mos"]),
+                    bundleIdentifiers: ["com.caldis.Mos"]),
     ConflictingTool(displayName: "LinearMouse",
                     bundleIdentifiers: ["com.lujjjh.LinearMouse"]),
     ConflictingTool(displayName: "UnnaturalScrollWheels",
