@@ -28,14 +28,25 @@ ReverseScrollCLI.app/
 ## 2. Core Mechanism
 
 ```swift
-// ~25 lines — the entire scroll reversal logic
-let callback: CGEventTapCallBack = { proxy, type, event, refcon in
+// Reversal logic from Sources/ReverseScrollCLI/EventTap.swift
+private let scrollCallback: CGEventTapCallBack = { _, type, event, _ in
+    if type == .tapDisabledByTimeout {
+        if let tap = eventTap { CGEvent.tapEnable(tap: tap, enable: true) }
+        return Unmanaged.passUnretained(event)
+    }
     // Mouse wheel = discrete (isContinuous == 0)
     // Trackpad = continuous (isContinuous != 0)
     if event.getIntegerValueField(.scrollWheelEventIsContinuous) == 0 {
+        // Read all three fields before writing any — setting DeltaAxis1 causes
+        // macOS to internally recalculate PointDelta and FixedPtDelta.
         let delta = event.getIntegerValueField(.scrollWheelEventDeltaAxis1)
+        let ptDelta = event.getIntegerValueField(.scrollWheelEventPointDeltaAxis1)
+        let fixedDelta = event.getDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1)
         event.setIntegerValueField(.scrollWheelEventDeltaAxis1, value: -delta)
+        event.setIntegerValueField(.scrollWheelEventPointDeltaAxis1, value: -ptDelta)
+        event.setDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1, value: -fixedDelta)
     }
+    // Axis 2 (horizontal) is intentionally passed through — deferred to v2.x.
     return Unmanaged.passUnretained(event)
 }
 
@@ -74,16 +85,21 @@ if event.getIntegerValueField(.scrollWheelEventMomentumPhase) != 0 ||
 }
 ```
 
-## 3. Size Estimate
+## 3. Module Map
 
-| Component | ~Lines (Swift) |
-|-----------|----------------|
-| Event tap + scroll reversal | 25 |
-| Mouse vs trackpad detection | 5 |
-| Permission check + user guidance | 15 |
-| Signal handling (SIGTERM/SIGINT) | 10 |
-| `--version` and help output | 15 |
-| **Total** | **~70** |
+The codebase was split from a single `main.swift` into 8 files under `Sources/ReverseScrollCLI/` as of v0.2.0:
+
+| File | Lines | Responsibility |
+|------|-------|----------------|
+| `main.swift` | 33 | Entry point + argument dispatch (`--daemon`, `--foreground`, `--version`, no-args) |
+| `Die.swift` | 11 | Unified `die()` helper — writes to stderr and exits |
+| `SystemChecks.swift` | 26 | Accessibility permission check, natural scrolling detection, macOS version gate |
+| `ConflictDetection.swift` | 26 | Bundle-ID-based detection of competing scroll tools (Mos, Scroll Reverser, etc.) |
+| `DaemonStatus.swift` | 31 | `launchctl`-based daemon liveness check |
+| `Status.swift` | 28 | `printStatus()` — renders the four documented no-args output states |
+| `EventTap.swift` | 73 | CGEvent tap creation, scroll callback, daemon run loop, SIGINT/SIGTERM handling |
+| `Version.swift` | 2 | Generated from `Version.swift.in`; exports single-source `version` constant |
+| **Total** | **230** | |
 
 ## 4. Permissions
 
