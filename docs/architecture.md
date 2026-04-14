@@ -27,18 +27,15 @@ ReverseScrollCLI.app/
 
 ## 2. Core Mechanism
 
+Verbatim from `Sources/ReverseScrollCLI/EventTap.swift` — the scroll callback and tap-create call. Note the three-field read-before-write ordering: setting `DeltaAxis1` causes macOS to internally recalculate `PointDeltaAxis1` and `FixedPtDeltaAxis1`, so all three originals must be captured before any write. Axis 2 (horizontal) is intentionally passed through (deferred to v2.x).
+
 ```swift
-// Reversal logic from Sources/ReverseScrollCLI/EventTap.swift
 private let scrollCallback: CGEventTapCallBack = { _, type, event, _ in
     if type == .tapDisabledByTimeout {
         if let tap = eventTap { CGEvent.tapEnable(tap: tap, enable: true) }
         return Unmanaged.passUnretained(event)
     }
-    // Mouse wheel = discrete (isContinuous == 0)
-    // Trackpad = continuous (isContinuous != 0)
     if event.getIntegerValueField(.scrollWheelEventIsContinuous) == 0 {
-        // Read all three fields before writing any — setting DeltaAxis1 causes
-        // macOS to internally recalculate PointDelta and FixedPtDelta.
         let delta = event.getIntegerValueField(.scrollWheelEventDeltaAxis1)
         let ptDelta = event.getIntegerValueField(.scrollWheelEventPointDeltaAxis1)
         let fixedDelta = event.getDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1)
@@ -46,22 +43,23 @@ private let scrollCallback: CGEventTapCallBack = { _, type, event, _ in
         event.setIntegerValueField(.scrollWheelEventPointDeltaAxis1, value: -ptDelta)
         event.setDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1, value: -fixedDelta)
     }
-    // Axis 2 (horizontal) is intentionally passed through — deferred to v2.x.
     return Unmanaged.passUnretained(event)
 }
 
+let mask = CGEventMask(1 << CGEventType.scrollWheel.rawValue)
 guard let tap = CGEvent.tapCreate(
     tap: .cghidEventTap,
     place: .tailAppendEventTap,
     options: .defaultTap,
-    eventsOfInterest: CGEventMask(1 << CGEventType.scrollWheel.rawValue),
-    callback: callback, userInfo: nil
-) else { exit(1) }
-
-let source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, tap, 0)
-CFRunLoopAddSource(CFRunLoopGetCurrent(), source, .commonModes)
-CGEvent.tapEnable(tap: tap, enable: true)
-CFRunLoopRun()
+    eventsOfInterest: mask,
+    callback: scrollCallback,
+    userInfo: nil
+) else {
+    die([
+        "Failed to create event tap.",
+        "Grant Accessibility permission and try again.",
+    ])
+}
 ```
 
 ### Mouse vs Trackpad Detection
