@@ -568,7 +568,7 @@ func isDaemonRunning() -> Bool {
     }
     // `launchctl print` for an agent with a live child shows `pid = <n>`.
     // Agents that are loaded but not currently running show `state = not running`.
-    return output.contains(" pid = ")
+    return output.contains("pid = ")
 }
 ```
 
