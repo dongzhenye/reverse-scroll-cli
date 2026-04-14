@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show toolchain
+        run: swift --version
+      - name: Generate version file
+        run: make version
+      - name: Build
+        run: swift build -c release
+      - name: Test
+        run: swift test
+      - name: Smoke — version
+        run: .build/release/ReverseScrollCLI --version
