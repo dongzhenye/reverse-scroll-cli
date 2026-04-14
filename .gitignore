@@ -19,3 +19,6 @@ DerivedData/
 .build/
 .swiftpm/
 Package.resolved
+
+# Generated from Version.swift.in by `make version`
+Sources/ReverseScrollCLI/Version.swift
