@@ -1,6 +1,6 @@
 APP_NAME = ReverseScrollCLI
 BINARY_NAME = reverse-scroll-cli
-VERSION = 0.1.1
+VERSION = 0.2.0-dev
 MIN_MACOS = 13.0
 BUNDLE_ID = com.dongzhenye.reverse-scroll-cli
 
@@ -16,18 +16,8 @@ all: bundle
 
 build:
 	@mkdir -p $(BUILD_DIR)
-	swiftc Sources/main.swift \
-		-o $(BUILD_DIR)/$(BINARY_NAME)-arm64 \
-		-target arm64-apple-macos$(MIN_MACOS) \
-		-O
-	swiftc Sources/main.swift \
-		-o $(BUILD_DIR)/$(BINARY_NAME)-x86 \
-		-target x86_64-apple-macos$(MIN_MACOS) \
-		-O
-	lipo -create \
-		$(BUILD_DIR)/$(BINARY_NAME)-arm64 \
-		$(BUILD_DIR)/$(BINARY_NAME)-x86 \
-		-output $(BUILD_DIR)/$(BINARY_NAME)
+	swift build -c release --arch arm64 --arch x86_64
+	cp .build/apple/Products/Release/$(APP_NAME) $(BUILD_DIR)/$(BINARY_NAME)
 
 bundle: build
 	@mkdir -p $(MACOS_DIR) $(RESOURCES_DIR)
@@ -43,4 +33,4 @@ zip: bundle
 	@echo "Created $(BUILD_DIR)/$(APP_NAME).app.zip"
 
 clean:
-	rm -rf $(BUILD_DIR)
+	rm -rf $(BUILD_DIR) .build
