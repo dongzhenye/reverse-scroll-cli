@@ -11,75 +11,28 @@
 - [x] Help/status output when run with no args
 - [x] README with install instructions
 
-## v0.2.0 — Open Source Prep & Distribution (P0)
+## v0.2.0 — Quality Refactor & Public Release (in progress)
 
-**Goal:** Make it production-ready and publicly discoverable.
+**Goal:** Refactor for maintainability and prepare for official signing + notarization.
 
-### Phase 0: Code Signing (Blocker) — [#2](https://github.com/dongzhenye/reverse-scroll-cli/issues/2)
-- [ ] **Apple Developer Program** — enroll ($99/year)
-- [ ] **Developer ID signing** — `codesign --sign "Developer ID Application: ..."``
-- [ ] **Notarization** — `notarytool submit` + `stapler staple`
-- [ ] **Update Makefile** — integrate signing into build pipeline
-- [ ] **Verify install flow** — no Gatekeeper warnings, Accessibility permission persists across upgrades
+### Wave A — Refactor & Tech Debt
+- [ ] SwiftPM migration + module split (main.swift → focused files)
+- [ ] Single-source version string (build-time injection)
+- [ ] Replace `pgrep` with `launchctl print` for daemon status
+- [ ] Conflict detection via bundleIdentifier (locale-safe)
+- [ ] Migrate Cask from `launchctl load/unload` to `bootstrap/bootout`
+- [ ] Unified `die()` error helper
+- [ ] Pure-helper unit tests (conflict detection, version)
+- [ ] Sync `product.md` + `architecture.md` to refactored code
 
-Without signing: Gatekeeper blocks first launch, Accessibility permission breaks on upgrade, users get repeated permission dialogs. This is the #1 blocker for "install and forget".
-
-### Phase 1: Distribution (Priority 1)
-- [ ] **Homebrew tap setup:**
-  - [ ] Create `dongzhenye/homebrew-tap` repo
-  - [ ] Add `Casks/reverse-scroll-cli.rb` with correct structure
-  - [ ] Test: `brew tap dongzhenye/tap && brew install --cask reverse-scroll-cli`
-- [ ] **GitHub release v0.1.0:**
-  - [ ] Run `make zip` to generate artifact
-  - [ ] Create release: `gh release create v0.1.0 build/ReverseScrollCLI.app.zip`
-  - [ ] Get sha256: `shasum -a 256 build/ReverseScrollCLI.app.zip`
-  - [ ] Update cask with real sha256
-- [ ] **Local cask install test:**
-  - [ ] Verify postflight installs LaunchAgent
-  - [ ] Verify daemon starts automatically
-  - [ ] Test permission flow
-  - [ ] Test all 4 status output states
-
-### Phase 2: README Polish (Priority 2)
-- [ ] **Add badges:**
-  - [ ] License: MIT
-  - [ ] macOS: 13.0+
-  - [ ] GitHub stars
-- [ ] **Add "Why CLI?" section** — positioning vs GUI tools
-- [ ] **Add comparison table** — vs Scroll Reverser, Mos, LinearMouse
-- [ ] **Add troubleshooting section:**
-  - [ ] Permission not granted → System Settings path
-  - [ ] Conflicting tools detected → how to check/remove
-  - [ ] Natural scrolling OFF warning → why it matters
-- [ ] **Add contributing guidelines** — basic PR workflow
-
-### Phase 3: Open Source Checklist (Priority 3)
-- [ ] **GitHub repo settings:**
-  - [ ] Add topics: `macos`, `scroll`, `mouse`, `trackpad`, `cli`, `swift`
-  - [ ] Add issue templates (bug report, feature request)
-  - [ ] Add PR template
-- [ ] **Security & privacy:**
-  - [ ] Add SECURITY.md (vulnerability reporting)
-  - [ ] Review code for any hardcoded paths/credentials
-  - [ ] Confirm no telemetry/analytics
-- [ ] **License verification:**
-  - [ ] Confirm MIT license in all source files
-  - [ ] Check dependencies (none currently)
-
-### Phase 4: Quality & Polish (Priority 4)
-- [ ] **Manual test pass:**
-  - [ ] Mouse reversal works
-  - [ ] Trackpad passthrough works
-  - [ ] All 4 status states display correctly
-- [ ] **Device compatibility validation:**
-  - [ ] USB mouse
-  - [ ] Bluetooth mouse
-  - [ ] Magic Mouse
-  - [ ] Trackpad
-- [ ] **Fix remaining review issues:**
-  - [ ] Migrate `launchctl load/unload` → `bootstrap/bootout` (deprecated API)
-  - [ ] Add `--verbose` flag for debug logging (optional, can defer)
-- [ ] **Set repo to public** — final step before v0.3.0
+### Wave B — Release Hardening (Phase 0 signing blocker [#2](https://github.com/dongzhenye/reverse-scroll-cli/issues/2))
+- [ ] Apple Developer Program enrollment ($99)
+- [ ] Developer ID Application signing in Makefile
+- [ ] Notarization (`notarytool submit` + `stapler staple`)
+- [ ] Create `dongzhenye/homebrew-tap` repo + move Cask there
+- [ ] GitHub Release v0.2.0 + real sha256 in Cask
+- [ ] GitHub Actions CI (build + `swift test` + `--version` smoke)
+- [ ] Verify clean install flow end-to-end (install → perm → daemon → uninstall)
 
 ## v0.3.0 — Content & Outreach (P1)
 
@@ -125,18 +78,6 @@ Without signing: Gatekeeper blocks first launch, Accessibility permission breaks
 - [ ] **Alternate detection for Logitech mice** — fallback heuristic when `isContinuous` is wrong
 - [ ] **Horizontal scroll reversal** — optional flag for tilt wheels
 - [ ] **Per-app exceptions** — config file to disable reversal in specific apps (e.g., games)
-
----
-
-## Priority Rationale
-
-**Phase 1 (Distribution):** Can't test or share without Homebrew tap + release artifact.
-
-**Phase 2 (README):** First impression for users. Must be polished before public launch.
-
-**Phase 3 (Open Source):** GitHub best practices. Important but not blocking distribution.
-
-**Phase 4 (Quality):** Final validation before going public.
 
 ---
 
