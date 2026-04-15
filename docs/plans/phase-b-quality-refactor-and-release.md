@@ -87,7 +87,7 @@ reverse-scroll-cli/
     architecture.md                          # updated (module map, line count)
     roadmap.md                               # updated (Stage 1+2 merged, done items struck)
     superpowers/plans/
-      2026-04-14-quality-refactor-and-release.md  # THIS FILE
+      phase-b-quality-refactor-and-release.md  # THIS FILE (renamed 2026-04-15 to phase-based slug)
 ```
 
 ---
