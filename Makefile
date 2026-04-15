@@ -1,6 +1,6 @@
 APP_NAME = ReverseScrollCLI
 BINARY_NAME = reverse-scroll-cli
-VERSION = 0.2.0
+VERSION = 0.3.0
 MIN_MACOS = 13.0
 BUNDLE_ID = com.dongzhenye.reverse-scroll-cli
 
