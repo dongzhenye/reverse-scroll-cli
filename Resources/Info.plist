@@ -9,6 +9,8 @@
     <string>ReverseScrollCLI</string>
     <key>CFBundleExecutable</key>
     <string>reverse-scroll-cli</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
     <key>CFBundleVersion</key>
     <string>__VERSION__</string>
     <key>CFBundleShortVersionString</key>

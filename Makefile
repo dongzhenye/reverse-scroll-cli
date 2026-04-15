@@ -39,6 +39,7 @@ bundle: build
 	@mkdir -p $(MACOS_DIR) $(RESOURCES_DIR)
 	cp $(BUILD_DIR)/$(BINARY_NAME) $(MACOS_DIR)/
 	cp $(BUILD_DIR)/Info.plist $(CONTENTS)/
+	cp Resources/AppIcon.icns $(RESOURCES_DIR)/
 	codesign --force --deep --options runtime --timestamp \
 		--sign "$(SIGN_IDENTITY)" \
 		--identifier $(BUNDLE_ID) \

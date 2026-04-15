@@ -36,7 +36,7 @@
 
 **Goal:** Project's public-facing surface no longer looks amateur. Prerequisite for content + outreach phases.
 
-- [ ] **AppIcon.icns** — 1024×1024 PNG → `Resources/AppIcon.icns`; Makefile bundle step copies to `.app/Contents/Resources/`, `Info.plist` adds `CFBundleIconFile`. Without this the `.app` looks naked in System Settings → Accessibility list and Finder.
+- [x] **AppIcon.icns** — 1024×1024 PNG → `Resources/AppIcon.icns`; Makefile bundle step copies to `.app/Contents/Resources/`, `Info.plist` adds `CFBundleIconFile`. Generated 2026-04-15 via Nano Banana Pro (Gemini 3 Pro Image) on z-macmini → squircle + opposing arrows; source PNG kept at `Resources/AppIcon.png`.
 - [ ] **GitHub homepage 装修** — About section (description, website, topics), social preview image (1280×640 OG for X/Reddit/HN shares), README hero (terminal `--foreground` demo GIF or comparison-table screenshot), pinned issue/discussion for first-impression feedback.
 - [ ] **products repo entry** (`dongzhenye/products`) — add reverse-scroll-cli with tagline, tech stack, status, links.
 
