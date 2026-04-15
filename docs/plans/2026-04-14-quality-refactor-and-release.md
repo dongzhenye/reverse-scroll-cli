@@ -889,30 +889,35 @@ git commit -m "build: sign bundle with Developer ID + hardened runtime"
 **Files:**
 - Modify: `Makefile`
 
+**Prerequisite** (one-time per machine): store notarytool credentials in Keychain via app-specific password (simpler than API key flow for solo release cadence):
+
+```bash
+# Generate an app-specific password at https://appleid.apple.com → App-Specific Passwords
+xcrun notarytool store-credentials "notarytool-profile" \
+  --apple-id "<apple-id-email>" \
+  --team-id "<10-char-team-id>" \
+  --password "<app-specific-password>"
+```
+
 - [ ] **Step 1: Add `notarize` target**
 
 ```makefile
-# App Store Connect API key identifiers (set in env or override on command line)
-AC_KEY_ID       ?= $(shell echo $$AC_KEY_ID)
-AC_ISSUER_ID    ?= $(shell echo $$AC_ISSUER_ID)
-AC_KEY_PATH     ?= $(HOME)/.appstoreconnect/private/AuthKey_$(AC_KEY_ID).p8
+# Keychain profile for notarytool (set via `xcrun notarytool store-credentials`).
+# Override with: make notarize NOTARY_PROFILE="..."
+NOTARY_PROFILE ?= notarytool-profile
 
 notarize: zip
-	@test -n "$(AC_KEY_ID)" || (echo "AC_KEY_ID not set"; exit 1)
 	xcrun notarytool submit $(BUILD_DIR)/$(APP_NAME).app.zip \
-		--key $(AC_KEY_PATH) \
-		--key-id $(AC_KEY_ID) \
-		--issuer $(AC_ISSUER_ID) \
+		--keychain-profile "$(NOTARY_PROFILE)" \
 		--wait
 	xcrun stapler staple $(APP_BUNDLE)
-	# Re-zip with stapled ticket
 	cd $(BUILD_DIR) && rm -f $(APP_NAME).app.zip && zip -r $(APP_NAME).app.zip $(APP_NAME).app LaunchAgent/
 	@echo "Notarized and stapled — $(BUILD_DIR)/$(APP_NAME).app.zip ready for release"
 ```
 
 - [ ] **Step 2: Run notarization**
 
-Run: `AC_KEY_ID=XXX AC_ISSUER_ID=YYY make notarize`
+Run: `make notarize`
 Expected: notarytool returns `status: Accepted`; stapler confirms.
 
 Run: `spctl --assess --type execute --verbose build/ReverseScrollCLI.app`
@@ -977,7 +982,7 @@ git commit -m "ci: add build + test + version smoke"
 
 - [ ] **Step 1: Build, sign, notarize**
 
-Run: `make clean && AC_KEY_ID=... AC_ISSUER_ID=... make notarize`
+Run: `make clean && make notarize`
 Expected: notarized `build/ReverseScrollCLI.app.zip` ready.
 
 - [ ] **Step 2: Compute sha256**
