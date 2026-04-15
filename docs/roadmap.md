@@ -15,7 +15,6 @@
 
 **Shipped**: 2026-04-15 · [Release](https://github.com/dongzhenye/reverse-scroll-cli/releases/tag/v0.2.0)
 
-### Wave A — Refactor & Tech Debt
 - [x] SwiftPM migration + module split (main.swift → 8 focused files)
 - [x] Single-source version string (build-time injection)
 - [x] Replace `pgrep` with `launchctl print` for daemon status
@@ -24,8 +23,6 @@
 - [x] Unified `die()` error helper
 - [x] Pure-helper unit tests (conflict detection, version)
 - [x] Sync `product.md` + `architecture.md` to refactored code
-
-### Wave B — Release Hardening
 - [x] Apple Developer Program enrollment ($99)
 - [x] Developer ID Application signing + hardened runtime + secure timestamp
 - [x] Notarization via `xcrun notarytool --keychain-profile`
@@ -37,41 +34,17 @@
 
 **Goal:** Build awareness through authentic content and community engagement, backed by visual polish so the project doesn't look amateur on first impression.
 
-### Visual Polish (prerequisite for outreach)
-- [ ] **AppIcon.icns** — 1024×1024 PNG → `Resources/AppIcon.icns`; Makefile's bundle step copies to `.app/Contents/Resources/`. Without this the `.app` looks naked in System Settings → Accessibility list and Finder.
-
-### Content Creation
-- [ ] **Blog post** — `dongzhenye/blog` repo:
-  - Title: "Building a Zero-Config macOS Scroll Reverser in ~230 Lines of Swift"
-  - Sections: Problem, Why CLI?, Architecture (CGEvent tap), Lessons (3-field delta ordering, ad-hoc → Developer ID signature migration breaking TCC, BRE/ERE pgrep bug), Comparison
-  - Target: Dev.to, Medium, personal blog
-- [ ] **X thread** (@dongzhenye):
-  - Hook: "macOS forces mouse + trackpad to share scroll direction. I built a CLI fix."
-  - 3-5 tweets: problem → solution → tech stack → GitHub link
-  - Visuals: terminal demo GIF, comparison table screenshot
-- [ ] **products repo entry** (`dongzhenye/products`):
-  - Add reverse-scroll-cli with tagline, tech stack, status, links
-- [ ] **GitHub homepage 装修** (first-impression layer):
-  - About section: description, website, topics
-  - Social preview image (1280×640, OG image for X/Reddit/HN shares)
-  - README hero: terminal `--foreground` demo GIF or comparison-table screenshot at top
-  - Pinned issue / discussion (e.g., "first impressions / feedback")
-
-### Community Outreach
-- [ ] **Reddit** — r/macOS, r/mac:
-  - 4 high-traffic threads identified (2023-2025) on "separate mouse trackpad scroll" / "natural scrolling mouse"
-  - Authentic, non-spammy comments emphasizing CLI differentiator
-- [ ] **Apple Discussions / StackExchange** — answer existing questions with solution
-- [ ] **Hacker News** — "Show HN" post (after blog + Reddit validation)
-- [ ] **Product Hunt** — optional launch (if traction is good)
-
-### Measurement Baseline (start day 0 of outreach)
-- [ ] Track from day 0: GitHub stars trajectory, `brew install --cask` analytics if tap exposes metrics, clones, PR/issue volume — to evaluate v0.3.0 outreach ROI at end
-
-### Feedback Loop
-- [ ] Collect: GitHub issues, Reddit comments, X replies
-- [ ] Bug fixes for early-user edge cases
-- [ ] Decide what feedback should bump to v0.4.0+ vs immediate v0.3.x patch
+- [ ] **AppIcon.icns** — 1024×1024 PNG → `Resources/AppIcon.icns`; Makefile's bundle step copies to `.app/Contents/Resources/`, `Info.plist` adds `CFBundleIconFile`. Without this the `.app` looks naked in System Settings → Accessibility list and Finder. (Blocks all outreach visuals.)
+- [ ] **GitHub homepage 装修** — About section (description, website, topics), social preview image (1280×640 OG for X/Reddit/HN shares), README hero (terminal `--foreground` demo GIF or comparison-table screenshot), pinned issue/discussion for first-impression feedback.
+- [ ] **products repo entry** (`dongzhenye/products`) — add reverse-scroll-cli with tagline, tech stack, status, links.
+- [ ] **Blog post** (`dongzhenye/blog`) — "Building a Zero-Config macOS Scroll Reverser in ~230 Lines of Swift"; target Dev.to + Medium + personal blog. Outline in §Content Strategy below.
+- [ ] **X thread** (@dongzhenye) — hook → problem → tech → CTA, with terminal demo GIF + comparison screenshot. Template in §Content Strategy below.
+- [ ] **Reddit outreach** — 4 identified threads in r/macOS / r/mac (2023-2025); authentic non-spammy comments emphasizing CLI differentiator. Targets + template in §Reddit Outreach Strategy below.
+- [ ] **Apple Discussions / StackExchange** — answer existing questions with solution.
+- [ ] **Hacker News "Show HN"** — post after blog + Reddit validation.
+- [ ] **Product Hunt** — optional launch if traction is good.
+- [ ] **Measurement baseline** — from day 0 of outreach: GitHub stars trajectory, clones, PR/issue volume, `brew install --cask` analytics if tap exposes metrics. Evaluate v0.3.0 ROI at end.
+- [ ] **Feedback triage** — GitHub issues / Reddit comments / X replies; fix early-user edge cases; decide v0.3.x patch vs v0.4.0+ bump.
 
 ## v0.3.x — Polish & Internal Sedimentation (rolling)
 
