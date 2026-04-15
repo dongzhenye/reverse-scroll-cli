@@ -285,7 +285,7 @@ From search results, these are active discussions where our tool is directly rel
 >
 > - Zero config (detects mouse vs trackpad automatically)
 > - Invisible daemon (no GUI)
-> - MIT licensed, ~200 lines of Swift
+> - MIT licensed, ~230 lines of Swift
 >
 > I built it because I wanted something that just runs in the background and doesn't ask me to configure anything. If you're looking for a lightweight alternative, give it a shot.
 
