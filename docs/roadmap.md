@@ -32,13 +32,15 @@
 - [x] GitHub Release v0.2.0 + real sha256 in Cask
 - [x] GitHub Actions CI (routes through `make build` / `make test` for Makefile drift coverage)
 
-## Phase C — Visual Infrastructure (will release as v0.3.0)
+## Phase C — Visual Infrastructure ✅ (released as v0.3.0, 2026-04-16)
+
+[Release](https://github.com/dongzhenye/reverse-scroll-cli/releases/tag/v0.3.0)
 
 **Goal:** Project's public-facing surface no longer looks amateur. Prerequisite for content + outreach phases.
 
 - [x] **AppIcon.icns** — 1024×1024 PNG → `Resources/AppIcon.icns`; Makefile bundle step copies to `.app/Contents/Resources/`, `Info.plist` adds `CFBundleIconFile`. Generated 2026-04-15 via Nano Banana Pro (Gemini 3 Pro Image) on z-macmini → squircle + opposing arrows; source PNG kept at `Resources/AppIcon.png`.
-- [ ] **GitHub homepage 装修** — About section (description, website, topics), social preview image (1280×640 OG for X/Reddit/HN shares), README hero (terminal `--foreground` demo GIF or comparison-table screenshot), pinned issue/discussion for first-impression feedback.
-- [ ] **products repo entry** (`dongzhenye/products`) — add reverse-scroll-cli with tagline, tech stack, status, links.
+- [x] **GitHub homepage 装修** — description + 8 topics set; homepage URL points to `reverse-scroll-cli.dongzhenye.com` (Cloudflare redirect rule → repo); 1280×640 social preview composed via PIL and uploaded via repo Settings; README hero composites AppIcon above a `charmbracelet/freeze`-rendered shell session; pinned feedback issue [#4](https://github.com/dongzhenye/reverse-scroll-cli/issues/4).
+- [x] **products repo entry** (`dongzhenye/products`) — `data/projects/reverse-scroll-cli.json` promoted to `stage: live`, `launchedAt: 2026-04-15`, description + website filled in.
 
 ## Phase D — Content Production (no release)
 
