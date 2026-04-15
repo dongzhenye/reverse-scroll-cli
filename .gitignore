@@ -14,3 +14,11 @@ DerivedData/
 
 # macOS
 .DS_Store
+
+# SwiftPM
+.build/
+.swiftpm/
+Package.resolved
+
+# Generated from Version.swift.in by `make version`
+Sources/ReverseScrollCLI/Version.swift

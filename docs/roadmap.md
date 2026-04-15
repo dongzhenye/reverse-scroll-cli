@@ -11,75 +11,28 @@
 - [x] Help/status output when run with no args
 - [x] README with install instructions
 
-## v0.2.0 — Open Source Prep & Distribution (P0)
+## v0.2.0 — Quality Refactor & Public Release (in progress)
 
-**Goal:** Make it production-ready and publicly discoverable.
+**Goal:** Refactor for maintainability and prepare for official signing + notarization.
 
-### Phase 0: Code Signing (Blocker) — [#2](https://github.com/dongzhenye/reverse-scroll-cli/issues/2)
-- [ ] **Apple Developer Program** — enroll ($99/year)
-- [ ] **Developer ID signing** — `codesign --sign "Developer ID Application: ..."``
-- [ ] **Notarization** — `notarytool submit` + `stapler staple`
-- [ ] **Update Makefile** — integrate signing into build pipeline
-- [ ] **Verify install flow** — no Gatekeeper warnings, Accessibility permission persists across upgrades
+### Wave A — Refactor & Tech Debt
+- [ ] SwiftPM migration + module split (main.swift → focused files)
+- [ ] Single-source version string (build-time injection)
+- [ ] Replace `pgrep` with `launchctl print` for daemon status
+- [ ] Conflict detection via bundleIdentifier (locale-safe)
+- [ ] Migrate Cask from `launchctl load/unload` to `bootstrap/bootout`
+- [ ] Unified `die()` error helper
+- [ ] Pure-helper unit tests (conflict detection, version)
+- [ ] Sync `product.md` + `architecture.md` to refactored code
 
-Without signing: Gatekeeper blocks first launch, Accessibility permission breaks on upgrade, users get repeated permission dialogs. This is the #1 blocker for "install and forget".
-
-### Phase 1: Distribution (Priority 1)
-- [ ] **Homebrew tap setup:**
-  - [ ] Create `dongzhenye/homebrew-tap` repo
-  - [ ] Add `Casks/reverse-scroll-cli.rb` with correct structure
-  - [ ] Test: `brew tap dongzhenye/tap && brew install --cask reverse-scroll-cli`
-- [ ] **GitHub release v0.1.0:**
-  - [ ] Run `make zip` to generate artifact
-  - [ ] Create release: `gh release create v0.1.0 build/ReverseScrollCLI.app.zip`
-  - [ ] Get sha256: `shasum -a 256 build/ReverseScrollCLI.app.zip`
-  - [ ] Update cask with real sha256
-- [ ] **Local cask install test:**
-  - [ ] Verify postflight installs LaunchAgent
-  - [ ] Verify daemon starts automatically
-  - [ ] Test permission flow
-  - [ ] Test all 4 status output states
-
-### Phase 2: README Polish (Priority 2)
-- [ ] **Add badges:**
-  - [ ] License: MIT
-  - [ ] macOS: 13.0+
-  - [ ] GitHub stars
-- [ ] **Add "Why CLI?" section** — positioning vs GUI tools
-- [ ] **Add comparison table** — vs Scroll Reverser, Mos, LinearMouse
-- [ ] **Add troubleshooting section:**
-  - [ ] Permission not granted → System Settings path
-  - [ ] Conflicting tools detected → how to check/remove
-  - [ ] Natural scrolling OFF warning → why it matters
-- [ ] **Add contributing guidelines** — basic PR workflow
-
-### Phase 3: Open Source Checklist (Priority 3)
-- [ ] **GitHub repo settings:**
-  - [ ] Add topics: `macos`, `scroll`, `mouse`, `trackpad`, `cli`, `swift`
-  - [ ] Add issue templates (bug report, feature request)
-  - [ ] Add PR template
-- [ ] **Security & privacy:**
-  - [ ] Add SECURITY.md (vulnerability reporting)
-  - [ ] Review code for any hardcoded paths/credentials
-  - [ ] Confirm no telemetry/analytics
-- [ ] **License verification:**
-  - [ ] Confirm MIT license in all source files
-  - [ ] Check dependencies (none currently)
-
-### Phase 4: Quality & Polish (Priority 4)
-- [ ] **Manual test pass:**
-  - [ ] Mouse reversal works
-  - [ ] Trackpad passthrough works
-  - [ ] All 4 status states display correctly
-- [ ] **Device compatibility validation:**
-  - [ ] USB mouse
-  - [ ] Bluetooth mouse
-  - [ ] Magic Mouse
-  - [ ] Trackpad
-- [ ] **Fix remaining review issues:**
-  - [ ] Migrate `launchctl load/unload` → `bootstrap/bootout` (deprecated API)
-  - [ ] Add `--verbose` flag for debug logging (optional, can defer)
-- [ ] **Set repo to public** — final step before v0.3.0
+### Wave B — Release Hardening (signing blocker: [#2](https://github.com/dongzhenye/reverse-scroll-cli/issues/2))
+- [ ] Apple Developer Program enrollment ($99)
+- [ ] Developer ID Application signing in Makefile
+- [ ] Notarization (`notarytool submit` + `stapler staple`)
+- [ ] Create `dongzhenye/homebrew-tap` repo + move Cask there
+- [ ] GitHub Release v0.2.0 + real sha256 in Cask
+- [ ] GitHub Actions CI (build + `swift test` + `--version` smoke)
+- [ ] Verify clean install flow end-to-end (install → perm → daemon → uninstall)
 
 ## v0.3.0 — Content & Outreach (P1)
 
@@ -128,19 +81,9 @@ Without signing: Gatekeeper blocks first launch, Accessibility permission breaks
 
 ---
 
-## Priority Rationale
-
-**Phase 1 (Distribution):** Can't test or share without Homebrew tap + release artifact.
-
-**Phase 2 (README):** First impression for users. Must be polished before public launch.
-
-**Phase 3 (Open Source):** GitHub best practices. Important but not blocking distribution.
-
-**Phase 4 (Quality):** Final validation before going public.
-
----
-
 ## Open Source Checklist Details
+
+> All items below shipped in v0.1.x (README badges / sections / troubleshooting, SECURITY.md, issue & PR templates, GitHub topics). Kept as reference templates for future projects.
 
 ### README Enhancements
 
@@ -256,18 +199,18 @@ We will respond within 48 hours and work with you to address the issue.
 
 **Tweet 1 (Hook):**
 > macOS forces your mouse and trackpad to share the same scroll direction.
-> 
+>
 > Natural scrolling feels right on a trackpad, but wrong with a mouse wheel.
-> 
+>
 > I built a CLI tool to fix this. Zero config, no GUI, just works.
-> 
+>
 > 🧵 [1/4]
 
 **Tweet 2 (Problem):**
 > Existing solutions (Scroll Reverser, Mos, LinearMouse) all add menu bar icons and preferences windows.
-> 
+>
 > I wanted something invisible. Install once, forget forever.
-> 
+>
 > So I built reverse-scroll-cli: a 200-line Swift daemon that runs in the background.
 
 **Tweet 3 (Tech):**
@@ -282,10 +225,10 @@ We will respond within 48 hours and work with you to address the issue.
 > ```
 > brew install --cask reverse-scroll-cli
 > ```
-> 
+>
 > MIT licensed, open source.
 > GitHub: [link]
-> 
+>
 > If you've been frustrated by this macOS limitation, give it a shot. 🚀
 
 **Visuals:**
@@ -342,7 +285,7 @@ From search results, these are active discussions where our tool is directly rel
 >
 > - Zero config (detects mouse vs trackpad automatically)
 > - Invisible daemon (no GUI)
-> - MIT licensed, ~200 lines of Swift
+> - MIT licensed, ~230 lines of Swift
 >
 > I built it because I wanted something that just runs in the background and doesn't ask me to configure anything. If you're looking for a lightweight alternative, give it a shot.
 

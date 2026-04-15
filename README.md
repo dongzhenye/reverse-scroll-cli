@@ -46,7 +46,7 @@ leaving trackpad behavior untouched.
 
 - Uses macOS CGEvent tap (documented public API)
 - Runs as an invisible background service
-- ~200 lines of Swift, zero dependencies
+- ~230 lines of Swift across 8 focused modules, zero dependencies
 - Universal binary (Apple Silicon + Intel)
 
 ## Manual testing

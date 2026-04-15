@@ -1,6 +1,6 @@
 cask "reverse-scroll-cli" do
-  version "0.1.0"
-  sha256 "TODO"
+  version "0.2.0"
+  sha256 "TODO"  # filled in by Task 13
 
   url "https://github.com/dongzhenye/reverse-scroll-cli/releases/download/v#{version}/ReverseScrollCLI.app.zip"
   name "ReverseScrollCLI"
@@ -13,23 +13,28 @@ cask "reverse-scroll-cli" do
   binary "#{appdir}/ReverseScrollCLI.app/Contents/MacOS/reverse-scroll-cli"
 
   postflight do
+    plist = "#{ENV["HOME"]}/Library/LaunchAgents/com.dongzhenye.reverse-scroll-cli.plist"
     system_command "cp",
-      args: [
-        "#{staged_path}/LaunchAgent/com.dongzhenye.reverse-scroll-cli.plist",
-        "#{ENV["HOME"]}/Library/LaunchAgents/"
-      ],
+      args: ["#{staged_path}/LaunchAgent/com.dongzhenye.reverse-scroll-cli.plist", plist],
       sudo: false
-    system_command "launchctl",
-      args: ["load", "#{ENV["HOME"]}/Library/LaunchAgents/com.dongzhenye.reverse-scroll-cli.plist"],
+    # bootout is a no-op if the label is not currently loaded.
+    system_command "/bin/launchctl",
+      args: ["bootout", "gui/#{Process.uid}/com.dongzhenye.reverse-scroll-cli"],
+      sudo: false,
+      must_succeed: false
+    system_command "/bin/launchctl",
+      args: ["bootstrap", "gui/#{Process.uid}", plist],
       sudo: false
   end
 
   uninstall_postflight do
-    system_command "launchctl",
-      args: ["unload", "#{ENV["HOME"]}/Library/LaunchAgents/com.dongzhenye.reverse-scroll-cli.plist"],
-      sudo: false
+    plist = "#{ENV["HOME"]}/Library/LaunchAgents/com.dongzhenye.reverse-scroll-cli.plist"
+    system_command "/bin/launchctl",
+      args: ["bootout", "gui/#{Process.uid}/com.dongzhenye.reverse-scroll-cli"],
+      sudo: false,
+      must_succeed: false
     system_command "rm",
-      args: ["-f", "#{ENV["HOME"]}/Library/LaunchAgents/com.dongzhenye.reverse-scroll-cli.plist"],
+      args: ["-f", plist],
       sudo: false
   end
 end

@@ -195,7 +195,9 @@ Not-macOS is a non-issue: Swift compiles to macOS-only target, binary won't exis
 
 ### Natural Scrolling Already OFF
 
-The tool always does one thing: negate mouse scroll delta. It does not read or adapt to the system setting. This means:
+The tool always does one thing: negate mouse scroll delta on axis 1 (vertical). Specifically, three fields are negated — `scrollWheelEventDeltaAxis1` (line delta), `scrollWheelEventPointDeltaAxis1` (pixel delta), and `scrollWheelEventFixedPtDeltaAxis1` (sub-pixel fixed-point) — with a read-before-write ordering: all three originals are captured first, then all three are written, because setting `DeltaAxis1` causes macOS to internally recalculate `PointDeltaAxis1` and `FixedPtDeltaAxis1`. Axis 2 (horizontal scroll) is intentionally passed through unchanged; per-axis horizontal reversal is deferred to a future enhancement (v2.x).
+
+The tool does not read or adapt to the system setting. This means:
 
 | System Setting | Tool Effect | Result |
 |---------------|------------|--------|
