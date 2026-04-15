@@ -35,34 +35,52 @@
 
 ## v0.3.0 — Content & Outreach (P1)
 
-**Goal:** Build awareness through authentic content and community engagement.
+**Goal:** Build awareness through authentic content and community engagement, backed by visual polish so the project doesn't look amateur on first impression.
+
+### Visual Polish (prerequisite for outreach)
+- [ ] **AppIcon.icns** — 1024×1024 PNG → `Resources/AppIcon.icns`; Makefile's bundle step copies to `.app/Contents/Resources/`. Without this the `.app` looks naked in System Settings → Accessibility list and Finder.
 
 ### Content Creation
-- [ ] **Blog post draft** — `dongzhenye/blog` repo:
-  - Title: "Building a Zero-Config macOS Scroll Reverser in 200 Lines of Swift"
-  - Sections: Problem, Why CLI?, Architecture (CGEvent tap), Lessons (delta ordering bug), Comparison
+- [ ] **Blog post** — `dongzhenye/blog` repo:
+  - Title: "Building a Zero-Config macOS Scroll Reverser in ~230 Lines of Swift"
+  - Sections: Problem, Why CLI?, Architecture (CGEvent tap), Lessons (3-field delta ordering, ad-hoc → Developer ID signature migration breaking TCC, BRE/ERE pgrep bug), Comparison
   - Target: Dev.to, Medium, personal blog
-- [ ] **X (Twitter) thread** — @dongzhenye:
+- [ ] **X thread** (@dongzhenye):
   - Hook: "macOS forces mouse + trackpad to share scroll direction. I built a CLI fix."
   - 3-5 tweets: problem → solution → tech stack → GitHub link
   - Visuals: terminal demo GIF, comparison table screenshot
-- [ ] **Products repo update** — `dongzhenye/products`:
-  - Add reverse-scroll-cli entry with tagline, tech stack, status
-  - Link to GitHub, blog post, Homebrew tap
+- [ ] **products repo entry** (`dongzhenye/products`):
+  - Add reverse-scroll-cli with tagline, tech stack, status, links
+- [ ] **GitHub homepage 装修** (first-impression layer):
+  - About section: description, website, topics
+  - Social preview image (1280×640, OG image for X/Reddit/HN shares)
+  - README hero: terminal `--foreground` demo GIF or comparison-table screenshot at top
+  - Pinned issue / discussion (e.g., "first impressions / feedback")
 
 ### Community Outreach
-- [ ] **Reddit engagement** — r/macOS, r/mac:
-  - Target threads: "separate mouse trackpad scroll", "natural scrolling mouse"
-  - Comment template: authentic, non-spammy, emphasize CLI differentiator
-  - 4 high-traffic threads identified (2023-2025)
+- [ ] **Reddit** — r/macOS, r/mac:
+  - 4 high-traffic threads identified (2023-2025) on "separate mouse trackpad scroll" / "natural scrolling mouse"
+  - Authentic, non-spammy comments emphasizing CLI differentiator
 - [ ] **Apple Discussions / StackExchange** — answer existing questions with solution
 - [ ] **Hacker News** — "Show HN" post (after blog + Reddit validation)
 - [ ] **Product Hunt** — optional launch (if traction is good)
 
+### Measurement Baseline (start day 0 of outreach)
+- [ ] Track from day 0: GitHub stars trajectory, `brew install --cask` analytics if tap exposes metrics, clones, PR/issue volume — to evaluate v0.3.0 outreach ROI at end
+
 ### Feedback Loop
-- [ ] **Collect feedback** — GitHub issues, Reddit comments, X replies
-- [ ] **Bug fixes** — address edge cases discovered by early users
-- [ ] **Usage analytics** — track GitHub stars, cask installs (if tap has metrics)
+- [ ] Collect: GitHub issues, Reddit comments, X replies
+- [ ] Bug fixes for early-user edge cases
+- [ ] Decide what feedback should bump to v0.4.0+ vs immediate v0.3.x patch
+
+## v0.3.x — Polish & Internal Sedimentation (rolling)
+
+Random-cadence small commits between v0.3.0 milestone and the next minor.
+
+- [ ] **Project-level `CLAUDE.md`** — sediment v0.2.0 learnings: module boundaries, build pipeline (SwiftPM + sed-based version injection), signing identity choice + Cask + tap layout, common pitfalls (TCC signature change, BRE/ERE, launchctl deprecations). Saves future-you (and AI agents) re-deriving on every revisit.
+- [ ] `--help` text: surface `--daemon` as `(internal, used by LaunchAgent)` for transparency
+- [ ] Replace `codesign --deep` with explicit per-component sign (Apple is deprecating `--deep`; no-op risk now since we have no nested frameworks, but future-proof)
+- [ ] Cask postflight: sed-rewrite LaunchAgent plist program path to use `#{appdir}` instead of hard-coded `/Applications/...` (only matters if user passes `brew install --cask --appdir=...`, but cheap to fix)
 
 ## v0.4.0 — Homebrew-core Submission (P1)
 
