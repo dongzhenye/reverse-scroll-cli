@@ -1,7 +1,7 @@
 # reverse-scroll-cli — Architecture
 
 > Technical design decisions and risk analysis.
-> For step-by-step build recipe, see [implementation.md](./implementation.md).
+> For the build recipe, see the `Makefile` — it is the canonical source.
 > For product context, see [product.md](./product.md).
 > For competitive source code analysis, see [research.md](./research.md).
 
