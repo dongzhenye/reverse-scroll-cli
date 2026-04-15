@@ -1,6 +1,6 @@
 APP_NAME = ReverseScrollCLI
 BINARY_NAME = reverse-scroll-cli
-VERSION = 0.2.0
+VERSION = 0.3.0
 MIN_MACOS = 13.0
 BUNDLE_ID = com.dongzhenye.reverse-scroll-cli
 
@@ -39,6 +39,7 @@ bundle: build
 	@mkdir -p $(MACOS_DIR) $(RESOURCES_DIR)
 	cp $(BUILD_DIR)/$(BINARY_NAME) $(MACOS_DIR)/
 	cp $(BUILD_DIR)/Info.plist $(CONTENTS)/
+	cp Resources/AppIcon.icns $(RESOURCES_DIR)/
 	codesign --force --deep --options runtime --timestamp \
 		--sign "$(SIGN_IDENTITY)" \
 		--identifier $(BUNDLE_ID) \
