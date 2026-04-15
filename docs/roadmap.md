@@ -11,28 +11,27 @@
 - [x] Help/status output when run with no args
 - [x] README with install instructions
 
-## v0.2.0 — Quality Refactor & Public Release (in progress)
+## v0.2.0 — Quality Refactor & Public Release ✅
 
-**Goal:** Refactor for maintainability and prepare for official signing + notarization.
+**Shipped**: 2026-04-15 · [Release](https://github.com/dongzhenye/reverse-scroll-cli/releases/tag/v0.2.0)
 
 ### Wave A — Refactor & Tech Debt
-- [ ] SwiftPM migration + module split (main.swift → focused files)
-- [ ] Single-source version string (build-time injection)
-- [ ] Replace `pgrep` with `launchctl print` for daemon status
-- [ ] Conflict detection via bundleIdentifier (locale-safe)
-- [ ] Migrate Cask from `launchctl load/unload` to `bootstrap/bootout`
-- [ ] Unified `die()` error helper
-- [ ] Pure-helper unit tests (conflict detection, version)
-- [ ] Sync `product.md` + `architecture.md` to refactored code
+- [x] SwiftPM migration + module split (main.swift → 8 focused files)
+- [x] Single-source version string (build-time injection)
+- [x] Replace `pgrep` with `launchctl print` for daemon status
+- [x] Conflict detection via bundleIdentifier (locale-safe; fixed wrong Mos ID)
+- [x] Migrate Cask from `launchctl load/unload` to `bootstrap/bootout`
+- [x] Unified `die()` error helper
+- [x] Pure-helper unit tests (conflict detection, version)
+- [x] Sync `product.md` + `architecture.md` to refactored code
 
-### Wave B — Release Hardening (signing blocker: [#2](https://github.com/dongzhenye/reverse-scroll-cli/issues/2))
-- [ ] Apple Developer Program enrollment ($99)
-- [ ] Developer ID Application signing in Makefile
-- [ ] Notarization (`notarytool submit` + `stapler staple`)
-- [ ] Create `dongzhenye/homebrew-tap` repo + move Cask there
-- [ ] GitHub Release v0.2.0 + real sha256 in Cask
-- [ ] GitHub Actions CI (build + `swift test` + `--version` smoke)
-- [ ] Verify clean install flow end-to-end (install → perm → daemon → uninstall)
+### Wave B — Release Hardening
+- [x] Apple Developer Program enrollment ($99)
+- [x] Developer ID Application signing + hardened runtime + secure timestamp
+- [x] Notarization via `xcrun notarytool --keychain-profile`
+- [x] `dongzhenye/homebrew-tap` Cask updated to v0.2.0
+- [x] GitHub Release v0.2.0 + real sha256 in Cask
+- [x] GitHub Actions CI (routes through `make build` / `make test` for Makefile drift coverage)
 
 ## v0.3.0 — Content & Outreach (P1)
 
