@@ -1,6 +1,8 @@
 # reverse-scroll-cli — Development Roadmap
 
-## v0.1.0 — MVP ✅
+> **Conventions** — Phases (letters) track investment milestones; releases (SemVer) track code contracts. They're decoupled: only code-changing phases produce a `git tag`. Each phase is a single flat checklist; if scope feels too big, insert a new phase rather than adding sub-sections.
+
+## Phase A — MVP ✅ (released as v0.1.0)
 
 - [x] Swift CLI daemon with CGEvent tap
 - [x] `isContinuous` mouse detection
@@ -11,9 +13,9 @@
 - [x] Help/status output when run with no args
 - [x] README with install instructions
 
-## v0.2.0 — Quality Refactor & Public Release ✅
+## Phase B — Quality Refactor & Public Release ✅ (released as v0.2.0, 2026-04-15)
 
-**Shipped**: 2026-04-15 · [Release](https://github.com/dongzhenye/reverse-scroll-cli/releases/tag/v0.2.0)
+[Release](https://github.com/dongzhenye/reverse-scroll-cli/releases/tag/v0.2.0)
 
 - [x] SwiftPM migration + module split (main.swift → 8 focused files)
 - [x] Single-source version string (build-time injection)
@@ -30,32 +32,33 @@
 - [x] GitHub Release v0.2.0 + real sha256 in Cask
 - [x] GitHub Actions CI (routes through `make build` / `make test` for Makefile drift coverage)
 
-## v0.3.0 — Content & Outreach (P1)
+## Phase C — Visual Infrastructure (will release as v0.3.0)
 
-**Goal:** Build awareness through authentic content and community engagement, backed by visual polish so the project doesn't look amateur on first impression.
+**Goal:** Project's public-facing surface no longer looks amateur. Prerequisite for content + outreach phases.
 
-- [ ] **AppIcon.icns** — 1024×1024 PNG → `Resources/AppIcon.icns`; Makefile's bundle step copies to `.app/Contents/Resources/`, `Info.plist` adds `CFBundleIconFile`. Without this the `.app` looks naked in System Settings → Accessibility list and Finder. (Blocks all outreach visuals.)
+- [ ] **AppIcon.icns** — 1024×1024 PNG → `Resources/AppIcon.icns`; Makefile bundle step copies to `.app/Contents/Resources/`, `Info.plist` adds `CFBundleIconFile`. Without this the `.app` looks naked in System Settings → Accessibility list and Finder.
 - [ ] **GitHub homepage 装修** — About section (description, website, topics), social preview image (1280×640 OG for X/Reddit/HN shares), README hero (terminal `--foreground` demo GIF or comparison-table screenshot), pinned issue/discussion for first-impression feedback.
 - [ ] **products repo entry** (`dongzhenye/products`) — add reverse-scroll-cli with tagline, tech stack, status, links.
+
+## Phase D — Content Production (no release)
+
+**Goal:** Produce the narrative artifacts that outreach links to.
+
 - [ ] **Blog post** (`dongzhenye/blog`) — "Building a Zero-Config macOS Scroll Reverser in ~230 Lines of Swift"; target Dev.to + Medium + personal blog. Outline in §Content Strategy below.
 - [ ] **X thread** (@dongzhenye) — hook → problem → tech → CTA, with terminal demo GIF + comparison screenshot. Template in §Content Strategy below.
+
+## Phase E — Outreach & Measurement (no release)
+
+**Goal:** Drive traffic + capture early-user signal. Measurement starts day 0.
+
 - [ ] **Reddit outreach** — 4 identified threads in r/macOS / r/mac (2023-2025); authentic non-spammy comments emphasizing CLI differentiator. Targets + template in §Reddit Outreach Strategy below.
 - [ ] **Apple Discussions / StackExchange** — answer existing questions with solution.
 - [ ] **Hacker News "Show HN"** — post after blog + Reddit validation.
 - [ ] **Product Hunt** — optional launch if traction is good.
-- [ ] **Measurement baseline** — from day 0 of outreach: GitHub stars trajectory, clones, PR/issue volume, `brew install --cask` analytics if tap exposes metrics. Evaluate v0.3.0 ROI at end.
-- [ ] **Feedback triage** — GitHub issues / Reddit comments / X replies; fix early-user edge cases; decide v0.3.x patch vs v0.4.0+ bump.
+- [ ] **Measurement baseline** — from day 0: GitHub stars trajectory, clones, PR/issue volume, `brew install --cask` analytics if tap exposes metrics. Evaluate Phase E ROI at close.
+- [ ] **Feedback triage** — GitHub issues / Reddit comments / X replies; fix early-user edge cases; decide what bumps to a later phase.
 
-## v0.3.x — Polish & Internal Sedimentation (rolling)
-
-Random-cadence small commits between v0.3.0 milestone and the next minor.
-
-- [ ] **Project-level `CLAUDE.md`** — sediment v0.2.0 learnings: module boundaries, build pipeline (SwiftPM + sed-based version injection), signing identity choice + Cask + tap layout, common pitfalls (TCC signature change, BRE/ERE, launchctl deprecations). Saves future-you (and AI agents) re-deriving on every revisit.
-- [ ] `--help` text: surface `--daemon` as `(internal, used by LaunchAgent)` for transparency
-- [ ] Replace `codesign --deep` with explicit per-component sign (Apple is deprecating `--deep`; no-op risk now since we have no nested frameworks, but future-proof)
-- [ ] Cask postflight: sed-rewrite LaunchAgent plist program path to use `#{appdir}` instead of hard-coded `/Applications/...` (only matters if user passes `brew install --cask --appdir=...`, but cheap to fix)
-
-## v0.4.0 — Homebrew-core Submission (P1)
+## Phase F — Homebrew-core Submission (will release as v0.4.0)
 
 **Goal:** Official distribution via `brew install reverse-scroll-cli`.
 
@@ -63,11 +66,22 @@ Random-cadence small commits between v0.3.0 milestone and the next minor.
 - [ ] **Address review feedback** — cask style, naming, audit compliance
 - [ ] **Merge & announce** — update README, post to Reddit/HN/X
 
-## Future Enhancements (P2)
+## Phase G — Polish & Sedimentation (will release as v0.5.0; start when batchable)
 
-- [ ] **Alternate detection for Logitech mice** — fallback heuristic when `isContinuous` is wrong
-- [ ] **Horizontal scroll reversal** — optional flag for tilt wheels
-- [ ] **Per-app exceptions** — config file to disable reversal in specific apps (e.g., games)
+**Goal:** Convert accumulated small-but-not-trivial fixes into a coherent release. Don't open until items batch up — small drive-by fixes go straight to commit, not to roadmap.
+
+- [ ] **Project-level `CLAUDE.md`** — sediment Phase B learnings: module boundaries, build pipeline (SwiftPM + sed-based version injection), signing identity choice + Cask + tap layout, common pitfalls (TCC signature change, BRE/ERE, launchctl deprecations). Saves future-you (and AI agents) re-deriving on every revisit.
+- [ ] `--help` text: surface `--daemon` as `(internal, used by LaunchAgent)` for transparency.
+- [ ] Replace `codesign --deep` with explicit per-component sign (Apple is deprecating `--deep`; no-op risk now since we have no nested frameworks, but future-proof).
+- [ ] Cask postflight: sed-rewrite LaunchAgent plist program path to use `#{appdir}` instead of hard-coded `/Applications/...` (only matters if user passes `brew install --cask --appdir=...`, but cheap to fix).
+
+## Backlog (unphased)
+
+Items recognized as worth doing but not yet promoted to a phase. Promote when scope + dependencies firm up.
+
+- [ ] **Alternate detection for Logitech mice** — fallback heuristic when `isContinuous` is wrong.
+- [ ] **Horizontal scroll reversal** — optional flag for tilt wheels.
+- [ ] **Per-app exceptions** — config file to disable reversal in specific apps (e.g., games).
 
 ---
 
