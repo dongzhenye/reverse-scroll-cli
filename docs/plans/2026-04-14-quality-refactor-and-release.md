@@ -2,9 +2,16 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+> **Convention update (2026-04-15, post-merge):** The project adopted a Phase-letter (A, B, C…) + decoupled SemVer-release convention after this plan shipped. This doc was retro-edited so that references resolve under the new scheme. Cross-walk:
+> - **The work this plan executed** ≡ Phase B, released as v0.2.0 (2026-04-15).
+> - **"v0.3.0 outreach" / "blog / X / Reddit"** in this doc → now Phase D (Content Production) + Phase E (Outreach & Measurement); the new v0.3.0 is Phase C (Visual Infrastructure, AppIcon-driven).
+> - **"v0.4.0 Homebrew-core"** → now Phase F, still released as v0.4.0.
+> - **Plan-internal "Phase 1" / "Phase 2"** were renamed to **Stage 1 / Stage 2** to disambiguate from project-level Phase letters.
+> - Embedded code blocks below preserve the *original instructions at planning time* (e.g., the `Wave A / Wave B` roadmap structure that was instructed and shipped); the roadmap was later flattened and renamed to Phase B per the new convention.
+
 **Goal:** Pay down tech debt, restructure for future iteration, and complete pre-open-source hardening so `brew install --cask reverse-scroll-cli` works end-to-end with signing + notarization.
 
-**Architecture:** Two sequential phases on branch `feat/v0.2.0-quality-refactor`. Phase 1 restructures `main.swift` into a SwiftPM package with focused modules, unifies version/error handling, and fixes fragile runtime checks. Phase 2 wires code signing, notarization, Cask publication, and release plumbing. Docs (`product.md`, `architecture.md`, `roadmap.md`) are updated as part of the relevant tasks so they never drift from code.
+**Architecture:** Two sequential stages on branch `feat/v0.2.0-quality-refactor`. Stage 1 restructures `main.swift` into a SwiftPM package with focused modules, unifies version/error handling, and fixes fragile runtime checks. Stage 2 wires code signing, notarization, Cask publication, and release plumbing. Docs (`product.md`, `architecture.md`, `roadmap.md`) are updated as part of the relevant tasks so they never drift from code.
 
 **Tech Stack:** Swift 5.9+ / SwiftPM, CoreGraphics/ApplicationServices/AppKit, Makefile, Homebrew Cask, `codesign`, `notarytool`, GitHub Releases, GitHub Actions.
 
@@ -37,7 +44,7 @@
 | G | `Cask/reverse-scroll-cli.rb:2` | `sha256 "TODO"` — no release artifact yet. |
 | H | Build pipeline | No code signing, no notarization; Gatekeeper will warn on install. |
 | I | Repo | No CI. A trivial "compile + `--version`" check in GitHub Actions would catch breakages cheaply. |
-| J | `docs/roadmap.md` | Several Phase 2 / Phase 3 items are already shipped (badges, "Why CLI?", comparison table, SECURITY.md, issue templates); roadmap needs to reflect reality before we start. |
+| J | `docs/roadmap.md` | Several "Phase 2" / "Phase 3" items (under the pre-2026-04-15 roadmap labels) are already shipped (badges, "Why CLI?", comparison table, SECURITY.md, issue templates); roadmap needs to reflect reality before we start. |
 | K | `docs/architecture.md` | Stale line count; should note module split. |
 | L | `docs/product.md` | Inverted fields list is incomplete. |
 
@@ -45,13 +52,13 @@
 - Logitech `isContinuous` fallback detection
 - Horizontal scroll reversal (axis 2)
 - Per-app / per-device exceptions
-- Homebrew-core submission (will happen in v0.4.0)
-- Blog / X / Reddit outreach (v0.3.0)
+- Homebrew-core submission (will happen in Phase F, v0.4.0)
+- Blog / X / Reddit outreach (Phase D + E; no release tag)
 - Unit-test suite beyond pure helper coverage added here
 
 ---
 
-## File Structure (target after Phase 1)
+## File Structure (target after Stage 1)
 
 ```
 reverse-scroll-cli/
@@ -78,14 +85,14 @@ reverse-scroll-cli/
   docs/
     product.md                               # updated (inverted fields, axis-2 note)
     architecture.md                          # updated (module map, line count)
-    roadmap.md                               # updated (Phase 1+2 merged, done items struck)
+    roadmap.md                               # updated (Stage 1+2 merged, done items struck)
     superpowers/plans/
       2026-04-14-quality-refactor-and-release.md  # THIS FILE
 ```
 
 ---
 
-## Phase 1 — Tech Debt & Refactor
+## Stage 1 — Tech Debt & Refactor
 
 ### Task 1: Update roadmap to reflect reality, absorb new scope
 
@@ -101,7 +108,7 @@ Restructure v0.2.0 as two waves matching this plan:
 ```markdown
 ## v0.2.0 — Quality Refactor & Public Release (in progress)
 
-### Wave A — Refactor & Tech Debt (Phase 1 of quality-refactor plan)
+### Wave A — Refactor & Tech Debt (Stage 1 of quality-refactor plan)
 - [ ] SwiftPM migration + module split
 - [ ] Single-source version string (build-time injection)
 - [ ] Replace `pgrep` with `launchctl print` for daemon status
@@ -111,7 +118,7 @@ Restructure v0.2.0 as two waves matching this plan:
 - [ ] Pure-helper unit tests (conflict detection, version)
 - [ ] Sync product.md + architecture.md to code
 
-### Wave B — Release Hardening (Phase 2)
+### Wave B — Release Hardening (Stage 2)
 - [ ] Apple Developer Program enrollment ($99)
 - [ ] Developer ID Application signing in Makefile
 - [ ] Notarization (`notarytool submit` + `stapler staple`)
@@ -121,7 +128,7 @@ Restructure v0.2.0 as two waves matching this plan:
 - [ ] Verify clean install flow end-to-end
 ```
 
-Move content strategy (blog, X, products entry, Reddit threads) to v0.3.0 — already correctly placed.
+Move content strategy (blog, X, products entry, Reddit threads) to the outreach phase (now Phase D + E under the post-2026-04-15 convention) — already correctly placed.
 
 - [ ] **Step 2: Commit**
 
@@ -832,7 +839,7 @@ git commit -m "docs: sync product + architecture to refactored code"
 
 ---
 
-## Phase 2 — Release Hardening
+## Stage 2 — Release Hardening
 
 ### Task 9: Apple Developer Program enrollment (user action)
 
@@ -1060,7 +1067,7 @@ Expected: returns "Could not find service" — bootout ran.
 - Modify: `docs/roadmap.md`
 - Modify: `README.md`
 
-- [ ] **Step 1: Mark v0.2.0 done in roadmap; set v0.3.0 "in progress"**
+- [ ] **Step 1: Mark Phase B (v0.2.0) done in roadmap; set Phase C "in progress"**
 
 - [ ] **Step 2: README — replace "future versions will be notarized" language** (currently in Gatekeeper troubleshooting), since 0.2.0 is the first notarized build.
 
