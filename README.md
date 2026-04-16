@@ -1,7 +1,7 @@
 # reverse-scroll-cli
 
 <p align="center">
-  <img src="docs/images/hero.png" alt="reverse-scroll-cli — install and run" width="520">
+  <img src="docs/assets/hero.png" alt="reverse-scroll-cli — install and run" width="520">
 </p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
