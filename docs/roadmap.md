@@ -42,12 +42,12 @@
 - [x] **GitHub homepage 装修** — description + 8 topics set; homepage URL points to `reverse-scroll-cli.dongzhenye.com` (Cloudflare redirect rule → repo); 1280×640 social preview composed via PIL and uploaded via repo Settings; README hero composites AppIcon above a `charmbracelet/freeze`-rendered shell session; pinned feedback issue [#4](https://github.com/dongzhenye/reverse-scroll-cli/issues/4).
 - [x] **products repo entry** (`dongzhenye/products`) — `data/projects/reverse-scroll-cli.json` promoted to `stage: live`, `launchedAt: 2026-04-15`, description + website filled in.
 
-## Phase D — Content Production (no release)
+## Phase D — Content Production ✅ (no release; **Completed**: 2026-04-17)
 
 **Goal:** Produce the narrative artifacts that outreach links to.
 
-- [ ] **Blog post** (`dongzhenye/blog`) — "Building a Zero-Config macOS Scroll Reverser in ~230 Lines of Swift"; target Dev.to + Medium + personal blog. Outline in §Content Strategy below.
-- [ ] **X thread** (@dongzhenye) — hook → problem → tech → CTA, with terminal demo GIF + comparison screenshot. Template in §Content Strategy below.
+- [x] **Blog post** (`dongzhenye/blog`) — "Building a Zero-Config macOS Scroll Reverser in ~230 Lines of Swift"; PM-voice draft landed at `blog/draft/2026-04-16-building-reverse-scroll-cli.md`. Companion post `2026-03-02-macos-scroll-direction-fix.md` trimmed and cross-linked. Published URLs TBD (batch publish later).
+- [x] **X thread** (@dongzhenye) — 3-tweet thread (pain point → negative-space pitch → install) drafted at `x/drafts/2026-04-16-reverse-scroll-cli-launch.md`. Publish URL TBD.
 
 ## Phase E — Outreach & Measurement (no release)
 
