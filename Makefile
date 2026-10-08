@@ -18,9 +18,12 @@ SIGN_IDENTITY ?= $(shell security find-identity -v -p codesigning | grep "Develo
 # Override with: make notarize NOTARY_PROFILE="..."
 NOTARY_PROFILE ?= notarytool-profile
 
-.PHONY: all clean build bundle zip notarize version test
+.PHONY: all clean build bundle zip notarize version test test-cask
 
 all: bundle
+
+test-cask:
+	HOMEBREW_NO_AUTO_UPDATE=1 brew ruby Tests/cask_install_test.rb Cask/reverse-scroll-cli.rb
 
 test: version
 	swift test
@@ -33,7 +36,7 @@ version:
 build: version
 	@mkdir -p $(BUILD_DIR)
 	swift build -c release --arch arm64 --arch x86_64
-	cp .build/apple/Products/Release/$(APP_NAME) $(BUILD_DIR)/$(BINARY_NAME)
+	cp "$$(swift build -c release --arch arm64 --arch x86_64 --show-bin-path)/$(APP_NAME)" $(BUILD_DIR)/$(BINARY_NAME)
 
 bundle: build
 	@mkdir -p $(MACOS_DIR) $(RESOURCES_DIR)
