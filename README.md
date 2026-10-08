@@ -73,6 +73,23 @@ If the tool doesn't work after installation:
 4. Toggle it **on**
 5. Restart the tool: `brew reinstall --cask reverse-scroll-cli`
 
+### Startup fails after a restart or reinstall
+
+If installation reports `Bootstrap failed: 5: Input/output error`, update the
+Homebrew tap and reinstall:
+
+```bash
+brew update
+brew reinstall --cask dongzhenye/tap/reverse-scroll-cli
+```
+
+The installer removes the download quarantine attribute from its LaunchAgent
+configuration and registers the service through Homebrew's installer interface.
+The signed application retains its security attributes.
+
+The vendor installer manages the application and CLI link together; Homebrew's
+`--no-binaries` option does not suppress this link.
+
 ### Conflicting tools detected
 
 If you have Scroll Reverser, Mos, or similar tools running, two reversals cancel out. Check running apps:

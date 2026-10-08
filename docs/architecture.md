@@ -106,7 +106,9 @@ The codebase was split from a single `main.swift` into 8 files under `Sources/Re
 
 ## 5. Distribution
 
-- **Primary**: Homebrew cask with `postflight` (register LaunchAgent) and `uninstall_postflight` (remove LaunchAgent)
+- **Primary**: Homebrew cask with a generated vendor installer invoked by `installer script:` and `uninstall script:`. These documented interfaces support registering and removing the per-user LaunchAgent; sandboxed flight steps only support file preparation and cannot create launchd jobs.
+- The installer removes `com.apple.quarantine` only from the installed LaunchAgent plist, preserves the application's quarantine and signature, and writes the configured `appdir` into the daemon arguments. Reinstallation first stops an existing service; uninstall stops the service and removes its plist.
+- The installer owns application placement, the CLI symlink, and service registration as one operation. It refuses existing application or executable collisions and rolls back newly created files and the service on failure. The app is placed before the service starts; no later Homebrew artifact can fail after registration.
 - **Secondary**: GitHub release binary for manual download/test
 
 ## 6. Risks

@@ -16,5 +16,7 @@ jobs:
         run: make build
       - name: Test (via Makefile — regenerates Version.swift first)
         run: make test
+      - name: Test cask installer
+        run: make test-cask
       - name: Smoke — version
         run: build/reverse-scroll-cli --version
