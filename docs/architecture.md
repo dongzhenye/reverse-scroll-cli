@@ -22,6 +22,7 @@ ReverseScrollCLI.app/
 **Why hybrid** (not pure CLI binary):
 - macOS Accessibility permission is identified by **bundle ID**, stable across upgrades
 - Bare binary path changes on `brew upgrade`, breaking permission grants
+- `CFBundlePackageType=APPL` identifies the bundle as an application for Gatekeeper (v0.3.1).
 - `LSUIElement=true` = no dock icon, no menu bar — truly invisible
 - Still works as CLI: binary can be run directly for testing
 
