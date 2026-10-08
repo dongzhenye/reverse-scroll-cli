@@ -36,6 +36,16 @@ Grant it in **System Settings > Privacy & Security > Accessibility**.
 
 That's it. No configuration needed.
 
+## Upgrade
+
+```bash
+brew update
+brew upgrade --cask dongzhenye/tap/reverse-scroll-cli
+```
+
+Version 0.3.1 repairs the LaunchAgent installation and updates the signed app
+bundle metadata. Upgrading replaces the old startup configuration automatically.
+
 ## Uninstall
 
 ```bash
